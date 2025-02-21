@@ -24,4 +24,7 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\defines.hlsli" />
+  </ItemGroup>
 </Project>
