@@ -1,9 +1,29 @@
-#include "defines.hxx"
-#include <Windows.h>
+#include "Defines.hxx"
+#include <crtdbg.h>
 
 #ifdef __ENGINE__
+#include "System/Window.hxx"
 
-int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int) {
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	Window window;
+
+	window.SettingWindow(hInstance,nCmdShow);
+	window.ShowWindow();
+
+	MSG msg = window.GetMSG();
+
+	while (true) {
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		if (msg.message == WM_QUIT)
+			break;
+	}
+
 	return 0;
 }
 

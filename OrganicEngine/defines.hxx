@@ -1,33 +1,42 @@
-//	ƒtƒ@ƒCƒ‹–¼	Fdefines.hxx
-//	  ŠT  —v		Fƒ}ƒNƒ’è‹`
-//	ì	¬	Ò	Fdaigo
-//	 ì¬“ú	F2025/02/21 00:24:03
+//	ãƒ•ã‚¡ã‚¤ãƒ«å	ï¼šdefines.hxx
+//	  æ¦‚  è¦		ï¼šãƒã‚¯ãƒ­å®šç¾©
+//	ä½œ	æˆ	è€…	ï¼šdaigo
+//	 ä½œæˆæ—¥æ™‚	ï¼š2025/02/21 00:24:03
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
 #ifndef _____DEFINES_HXX_____
 #define _____DEFINES_HXX_____
 
-// Àsƒ‚[ƒh
-//#define __ENGINE__
+// å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰
+#define __ENGINE__
 #ifndef __ENGINE__
 #define BULLET_INPORT_CHECK
 #endif // !__ENGINE__
 
 
-// ƒrƒ‹ƒhƒ‚[ƒh
+// ãƒ“ãƒ«ãƒ‰ãƒ¢ãƒ¼ãƒ‰
 #ifdef _DEBUG
 #define DEBUG
 #else
-//#define SHIPPING		// 
+//#define SHIPPING
 #endif // !_DEBUG
 
 
-// •`‰æAPI‘I‘ğ
-#define DIRECTX11_PRJ
-//#define DIRECTX12_PRJ
+// æç”»APIé¸æŠ
+#define _DIRECTXs_PRJ
+#ifdef _DIRECTXs_PRJ
+#define DIRECTX12_PRJ
+//#define DIRECTX11_PRJ
+#else // !_DIRECTXs_PRJ
+#define VULKAN_PRJ
+#endif // !_DIRECTXs_PRJ
 
 
-// ’Ç‰Áˆ—
+// è¿½åŠ å‡¦ç†
 #define _THREADPOOL_
+
+
+// ãã®ä»–
+#define _CRTDBG_MAP_ALLOC // ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯æ¤œå‡º
 
 #endif // !_____DEFINES_HXX_____
