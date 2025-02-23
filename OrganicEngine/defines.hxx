@@ -7,16 +7,25 @@
 #ifndef _____DEFINES_HXX_____
 #define _____DEFINES_HXX_____
 
+// 実行モード
+//#define __ENGINE__
+#ifndef __ENGINE__
+#define BULLET_INPORT_CHECK
+#endif // !__ENGINE__
+
+
 // ビルドモード
 #ifdef _DEBUG
 #define DEBUG
 #else
-//#define SHIPPING
+//#define SHIPPING		// 
 #endif // !_DEBUG
+
 
 // 描画API選択
 #define DIRECTX11_PRJ
 //#define DIRECTX12_PRJ
+
 
 // 追加処理
 #define _THREADPOOL_
