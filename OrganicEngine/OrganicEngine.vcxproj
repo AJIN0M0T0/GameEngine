@@ -87,6 +87,7 @@
       <EnableModules>true</EnableModules>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -111,6 +112,7 @@
       <EnableModules>true</EnableModules>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -139,6 +141,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -166,6 +169,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -180,7 +184,7 @@
     <ClCompile Include="main.cxx">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Debugger.cpp">
+    <ClCompile Include="Debugger.cxx">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level3</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level3</WarningLevel>
@@ -192,7 +196,12 @@
     </ClCompile>
     <ClCompile Include="Math\Easing.cxx" />
     <ClCompile Include="Math\Vectors.cxx" />
+    <ClCompile Include="Supervision.cxx" />
+    <ClCompile Include="System\Allocator.cxx" />
     <ClCompile Include="System\DirectX\Direct3D.cxx" />
+    <ClInclude Include="Math\MathDef.hxx" />
+    <ClInclude Include="Supervision.hxx" />
+    <ClCompile Include="System\Timer.cxx" />
     <ClCompile Include="System\Window.cxx" />
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +209,11 @@
     <ClInclude Include="Debugger.hxx" />
     <ClInclude Include="Math\Easing.hxx" />
     <ClInclude Include="Math\Vectors.hxx" />
+    <ClInclude Include="absuse.hxx" />
+    <ClInclude Include="System\Allocator.hxx" />
     <ClInclude Include="System\DirectX\Direct3D.hxx" />
+    <ClInclude Include="System\Singleton.hxx" />
+    <ClInclude Include="System\Timer.hxx" />
     <ClInclude Include="System\Window.hxx" />
   </ItemGroup>
   <ItemGroup>

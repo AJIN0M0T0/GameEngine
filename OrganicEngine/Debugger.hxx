@@ -12,23 +12,18 @@
 #ifndef _____debugger_HXX_____
 #define _____debugger_HXX_____
 
-// =-=-= インクルード部 =-=-=
-#include "Defines.hxx"
-#ifdef DEBUG
-#include <windows.h>
 
-#endif // DEBUG
-
+/// @brief エラーの種類
 enum class ErrorType {
-	isFalse_Bool,
-	isFailure_HResult,
-	isNullptr_pointer,
-	Singleton_Instance_nullptr,
+	isFalse_Bool, // Falseなら停止します
+	isFailure_HResult, // HResultが失敗していたら停止
+	isNullptr_pointer, // ポインタのNullチェック
+	Singleton_Instance_nullptr, // シングルトンのインスタンスがnullptr
 };
 
 #ifndef SHIPPING
 // DEBUGとRELEASEの場合の共通処理
-
+#include <windows.h>
 #include <string>
 // デバッグ用文字列の出力　※セミコロン付き
 #define DebugString_(str) _DebugStringOutput(str);
@@ -59,7 +54,7 @@ Type* _NullptrCheckFunc(Type* ptr)
 	stri += typeid(Type).name();
 	stri += " の [ nullptr ]が発生しました。参照・依存関係を見直してください。\n";
 	if (!ptr) {
-		_DebugStringOutput(stri.c_str());
+		_DebugStringOutput(stri);
 		DebugBreak();
 	}
 	return ptr;

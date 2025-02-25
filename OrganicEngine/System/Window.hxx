@@ -10,13 +10,12 @@
 
 // =-=-= インクルード部 =-=-=
 #include <Windows.h>
+#include "Singleton.hxx"
 
-class Window
+class Window :public Singleton<Window>
 {
+	friend class Singleton<Window>;
 public:
-	Window();
-	~Window();
-
 	void SettingWindow(HINSTANCE hInstance, int nCmdShow);
 	void ShowWindow();
 
@@ -25,6 +24,9 @@ public:
 	static LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
 private:
+	Window();
+	~Window();
+
 	WNDCLASSEX m_wcex;
 	HWND m_hWnd;
 	MSG m_message;

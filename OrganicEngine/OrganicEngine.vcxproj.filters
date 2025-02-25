@@ -24,13 +24,22 @@
     <ClCompile Include="System\DirectX\Direct3D.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Debugger.cpp">
+    <ClCompile Include="Debugger.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Math\Easing.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Math\Vectors.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Supervision.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Allocator.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Timer.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,6 +60,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Math\Vectors.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Singleton.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="absuse.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Allocator.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Timer.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Supervision.hxx">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MathDef.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
