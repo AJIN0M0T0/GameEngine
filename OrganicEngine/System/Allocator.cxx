@@ -32,6 +32,8 @@ namespace {
 		___reak() { ReakMap = &ReakMapOlg; }
 		~___reak() 
 		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+
 			if(!ReakMapOlg.empty())
 				std::cout << "--------------------- リーク一覧 ------------------------" << std::endl;
 			for (auto& elem : ReakMapOlg)
@@ -42,6 +44,7 @@ namespace {
 					elem.second.Line << std::endl;
 			}
 			rewind(stdin); (void)getchar();
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 			ReakMap = nullptr;
 		}
 		size_t usingMemorySize = 0; // 使用中のメモリ総量

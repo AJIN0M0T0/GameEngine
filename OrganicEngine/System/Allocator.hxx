@@ -20,5 +20,4 @@ void* operator new[](size_t size);
 void operator delete(void* p, size_t size) noexcept;
 #endif // DEBUG
 
-
 #endif // !_____Allocator_HXX_____
