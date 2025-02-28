@@ -10,12 +10,14 @@
 
 // =-=-= インクルード部 =-=-=
 
-namespace timer
-{
-	void TimerInit();
-	float DeltaSeconds();
-	float GetFPS();
-	void TimerUpdate();
+namespace Engine {
+	namespace Time
+	{
+		void TimerInit();
+		float DeltaSeconds();
+		float GetFPS();
+		void TimerUpdate();
+	}
 }
 
 #endif // !_____Time_HXX_____

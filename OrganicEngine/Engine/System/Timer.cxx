@@ -13,17 +13,17 @@ namespace {
 	constexpr int FPS_QUEUE_SIZE = 100;
 }
 
-void timer::TimerInit()
+void Engine::Time::TimerInit()
 {
 	timeBeginPeriod(1);
 	countStartTime = timeGetTime();
 	preExecTime = countStartTime;
 }
-float timer::DeltaSeconds()
+float Engine::Time::DeltaSeconds()
 {
 	return fpsQueue.back();
 }
-float timer::GetFPS()
+float Engine::Time::GetFPS()
 {
 	int nCount = 0;
 	float fps = 0.0f;
@@ -31,7 +31,7 @@ float timer::GetFPS()
 		fps += fpsQueue[nCount];
 	return 1.0f / (fps / nCount);
 }
-void timer::TimerUpdate()
+void Engine::Time::TimerUpdate()
 {
 	DWORD nowTime = timeGetTime();
 	fpsQueue.push_back(static_cast<float>(nowTime - preExecTime) * 0.001f);

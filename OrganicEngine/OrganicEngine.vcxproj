@@ -87,7 +87,7 @@
       <EnableModules>true</EnableModules>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)\Engine\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -112,7 +112,7 @@
       <EnableModules>true</EnableModules>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)\Engine\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -141,7 +141,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)\Engine\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -169,7 +169,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <ForcedIncludeFiles>$(ProjectDir)\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)\Engine\absuse.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -181,10 +181,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cxx">
+    <ClCompile Include="Engine\main.cxx">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Debugger.cxx">
+    <ClCompile Include="Engine\Debugger.cxx">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level3</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level3</WarningLevel>
@@ -194,27 +194,37 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Level3</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
     </ClCompile>
-    <ClCompile Include="Math\Easing.cxx" />
-    <ClCompile Include="Math\Vectors.cxx" />
-    <ClCompile Include="Supervision.cxx" />
-    <ClCompile Include="System\Allocator.cxx" />
-    <ClCompile Include="System\DirectX\Direct3D.cxx" />
-    <ClInclude Include="Math\MathDef.hxx" />
-    <ClInclude Include="Supervision.hxx" />
-    <ClCompile Include="System\Timer.cxx" />
-    <ClCompile Include="System\Window.cxx" />
+    <ClCompile Include="Engine\Math\Easing.cxx" />
+    <ClCompile Include="Engine\Math\Vectors.cxx" />
+    <ClCompile Include="Engine\System\Graphics\CommandQueue.cxx" />
+    <ClCompile Include="Engine\System\Graphics\Shader.cxx" />
+    <ClCompile Include="Engine\System\Graphics\SwapChain.cxx" />
+    <ClCompile Include="Engine\System\Supervision.cxx" />
+    <ClCompile Include="Engine\System\Allocator.cxx" />
+    <ClCompile Include="Engine\System\Graphics\Device.cxx" />
+    <ClCompile Include="Engine\System\Graphics\GraphicsAPI.cxx" />
+    <ClInclude Include="Engine\Math\MathDef.hxx" />
+    <ClInclude Include="Engine\System\Graphics\CommandQueue.hxx" />
+    <ClInclude Include="Engine\System\Graphics\Shader.hxx" />
+    <ClInclude Include="Engine\System\Graphics\SwapChain.hxx" />
+    <ClInclude Include="Engine\System\Supervision.hxx" />
+    <ClCompile Include="Engine\System\Graphics\Texture.cxx" />
+    <ClCompile Include="Engine\System\Timer.cxx" />
+    <ClCompile Include="Engine\System\Window.cxx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Defines.hxx" />
-    <ClInclude Include="Debugger.hxx" />
-    <ClInclude Include="Math\Easing.hxx" />
-    <ClInclude Include="Math\Vectors.hxx" />
-    <ClInclude Include="absuse.hxx" />
-    <ClInclude Include="System\Allocator.hxx" />
-    <ClInclude Include="System\DirectX\Direct3D.hxx" />
-    <ClInclude Include="System\Singleton.hxx" />
-    <ClInclude Include="System\Timer.hxx" />
-    <ClInclude Include="System\Window.hxx" />
+    <ClInclude Include="Engine\Defines.hxx" />
+    <ClInclude Include="Engine\Debugger.hxx" />
+    <ClInclude Include="Engine\Math\Easing.hxx" />
+    <ClInclude Include="Engine\Math\Vectors.hxx" />
+    <ClInclude Include="Engine\absuse.hxx" />
+    <ClInclude Include="Engine\System\Allocator.hxx" />
+    <ClInclude Include="Engine\System\Graphics\Device.hxx" />
+    <ClInclude Include="Engine\System\Graphics\GraphicsAPI.hxx" />
+    <ClInclude Include="Engine\System\Graphics\Texture.hxx" />
+    <ClInclude Include="Engine\System\Singleton.hxx" />
+    <ClInclude Include="Engine\System\Timer.hxx" />
+    <ClInclude Include="Engine\System\Window.hxx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\defines.hlsli" />

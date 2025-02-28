@@ -10,6 +10,7 @@
 #define _____ABSUSE_HXX_____
 
 // 全てのファイルに必ず使用されるインクルード
+#include <memory>
 #include "Defines.hxx"
 #include "Debugger.hxx"
 #include "System/Allocator.hxx"

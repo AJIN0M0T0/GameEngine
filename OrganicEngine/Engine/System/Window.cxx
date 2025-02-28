@@ -1,6 +1,6 @@
 #include "Window.hxx"
 
-Window::Window()
+Engine::Window::Window()
 	: SCREEN_WIDTH(1280)
 	, SCREEN_HEIGHT(720)
 	, m_bFullScreen(false)
@@ -8,12 +8,12 @@ Window::Window()
 
 }
 
-Window::~Window()
+Engine::Window::~Window()
 {
 	UnregisterClass(m_wcex.lpszClassName, m_wcex.hInstance);
 }
 
-LRESULT Window::WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+LRESULT Engine::Window::WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	switch (msg) {
 	case WM_DESTROY:
@@ -23,7 +23,7 @@ LRESULT Window::WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpara
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void Window::SettingWindow(HINSTANCE hInstance, int nCmdShow)
+void Engine::Window::SettingWindow(HINSTANCE hInstance, int nCmdShow)
 {
 	m_hInstance = hInstance;
 	m_nCmdShow = nCmdShow;
@@ -48,7 +48,7 @@ void Window::SettingWindow(HINSTANCE hInstance, int nCmdShow)
 	}
 }
 
-void Window::ShowWindow()
+void Engine::Window::ShowWindow()
 {
 	// ウィンドウの作成
 	RECT rect = { 0, 0, (long)SCREEN_WIDTH, (long)SCREEN_HEIGHT };

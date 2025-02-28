@@ -12,17 +12,19 @@
 #ifndef _____debugger_HXX_____
 #define _____debugger_HXX_____
 
-
-/// @brief エラーの種類
-enum class ErrorType {
-	isFalse_Bool, // Falseなら停止します
-	isFailure_HResult, // HResultが失敗していたら停止
-	isNullptr_pointer, // ポインタのNullチェック
-	Singleton_Instance_nullptr, // シングルトンのインスタンスがnullptr
+namespace Engine {
+	/// @brief エラーの種類
+	enum class ErrorType {
+		isFalse_Bool, // Falseなら停止します
+		isFailure_HResult, // HResultが失敗していたら停止
+		isNullptr_pointer, // ポインタのNullチェック
+		Singleton_Instance_nullptr, // シングルトンのインスタンスがnullptr
+		Unsetting_Factory, // ファクトリーが設定されていません
+	};
 };
 
 #ifndef SHIPPING
-// DEBUGとRELEASEの場合の共通処理
+	// DEBUGとRELEASEの場合の共通処理
 #include <windows.h>
 #include <string>
 // デバッグ用文字列の出力　※セミコロン付き
@@ -33,9 +35,9 @@ enum class ErrorType {
 void _DebugStringOutput(const std::string& str);
 
 #ifdef DEBUG
-// DEBUGの場合のみの処理
+	// DEBUGの場合のみの処理
 
-// ポインタのNullチェック
+	// ポインタのNullチェック
 #define NullptrCheck(ptr) _NullptrCheckFunc(ptr)
 // ポインタのNullチェック　※セミコロン付き
 #define NullptrCheck_(ptr) _NullptrCheckFunc(ptr);
@@ -46,28 +48,28 @@ void _DebugStringOutput(const std::string& str);
 // ここにたどり着いたら停止　※セミコロン付き
 #define DebugBreakPoint_ DebugBreak();
 
-template<typename Type>
-Type* _NullptrCheckFunc(Type* ptr)
-{
-	std::string stri;
-	stri += "■◆■◆■ !-!-!-! ■◆■◆■ ：";
-	stri += typeid(Type).name();
-	stri += " の [ nullptr ]が発生しました。参照・依存関係を見直してください。\n";
-	if (!ptr) {
-		_DebugStringOutput(stri);
-		DebugBreak();
+	template<typename Type>
+	Type* _NullptrCheckFunc(Type* ptr)
+	{
+		std::string stri;
+		stri += "■◆■◆■ !-!-!-! ■◆■◆■ ：";
+		stri += typeid(Type).name();
+		stri += " の [ nullptr ]が発生しました。参照・依存関係を見直してください。\n";
+		if (!ptr) {
+			_DebugStringOutput(stri);
+			DebugBreak();
+		}
+		return ptr;
 	}
-	return ptr;
-}
-bool _falseCheckFunc(bool b);
-HRESULT _HResultCheckFunc(HRESULT hr);
+	bool _falseCheckFunc(bool b);
+	HRESULT _HResultCheckFunc(HRESULT hr);
 
 #else // !DEBUG
-// RELEASEでありSHIPPINGでもDEBUGでもない場合の処理
+	// RELEASEでありSHIPPINGでもDEBUGでもない場合の処理
 
 #endif // DEBUG
 #else // SHIPPING
-// SHIPPINGの場合のみの処理
+	// SHIPPINGの場合のみの処理
 
 #define DebugString_(str);
 #define DebugCOUT_(str);
@@ -83,5 +85,6 @@ HRESULT _HResultCheckFunc(HRESULT hr);
 #define DebugBreakPoint_ 
 
 #endif // !DEBUG
+
 
 #endif // !_____debugger_HXX_____

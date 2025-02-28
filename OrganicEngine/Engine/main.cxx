@@ -2,27 +2,27 @@
 #include <crtdbg.h>
 
 #ifdef __ENGINE__
-#include "Supervision.hxx"
+#include "System/Supervision.hxx"
 #include "System/Window.hxx"
 #include "System/Timer.hxx"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	Window& window = Window::CreateInstance();
+	Engine::Window& window = Engine::Window::CreateInstance();
 	window.SettingWindow(hInstance,nCmdShow);
 	window.ShowWindow();
 
 	// 初期化処理　※失敗したら停止
-	if (!Supervision::Initialize())
+	if (!Engine::System::Supervision::Initialize())
 	{
-		Supervision::Finalize();
+		Engine::System::Supervision::Finalize();
 		return 0;
 	}
 
 	MSG msg = window.GetMSG();
 
-	timer::TimerInit();
+	Engine::Time::TimerInit();
 
 	while (true) {
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
@@ -31,9 +31,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		else
 		{
-			DebugString_(std::to_string(timer::GetFPS()) + "\n")
-			Supervision::Updater();
-			timer::TimerUpdate();
+			DebugString_(std::to_string(Engine::Time::GetFPS()) + "\n")
+			Engine::System::Supervision::Updater();
+			Engine::Time::TimerUpdate();
 		}
 
 		if (msg.message == WM_QUIT)
@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 終了時
 	timeEndPeriod(1);
-	Supervision::Finalize();
+	Engine::System::Supervision::Finalize();
 
 	return 0;
 }

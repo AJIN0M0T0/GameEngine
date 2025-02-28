@@ -15,69 +15,99 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cxx">
+    <ClCompile Include="Engine\main.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="System\Window.cxx">
+    <ClCompile Include="Engine\System\Window.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="System\DirectX\Direct3D.cxx">
+    <ClCompile Include="Engine\System\Graphics\GraphicsAPI.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Debugger.cxx">
+    <ClCompile Include="Engine\Debugger.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Easing.cxx">
+    <ClCompile Include="Engine\Math\Easing.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Vectors.cxx">
+    <ClCompile Include="Engine\Math\Vectors.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Supervision.cxx">
+    <ClCompile Include="Engine\System\Supervision.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="System\Allocator.cxx">
+    <ClCompile Include="Engine\System\Allocator.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="System\Timer.cxx">
+    <ClCompile Include="Engine\System\Timer.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\System\Graphics\Texture.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\System\Graphics\Device.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\System\Graphics\Shader.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\System\Graphics\SwapChain.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\System\Graphics\CommandQueue.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Defines.hxx">
+    <ClInclude Include="Engine\Defines.hxx">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Window.hxx">
+    <ClInclude Include="Engine\System\Window.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\DirectX\Direct3D.hxx">
+    <ClInclude Include="Engine\System\Graphics\GraphicsAPI.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Debugger.hxx">
+    <ClInclude Include="Engine\Debugger.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Easing.hxx">
+    <ClInclude Include="Engine\Math\Easing.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Vectors.hxx">
+    <ClInclude Include="Engine\Math\Vectors.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Singleton.hxx">
+    <ClInclude Include="Engine\System\Singleton.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="absuse.hxx">
+    <ClInclude Include="Engine\absuse.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Allocator.hxx">
+    <ClInclude Include="Engine\System\Allocator.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Timer.hxx">
+    <ClInclude Include="Engine\System\Timer.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Supervision.hxx">
+    <ClInclude Include="Engine\System\Supervision.hxx">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math\MathDef.hxx">
+    <ClInclude Include="Engine\Math\MathDef.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\Graphics\Texture.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\Graphics\Device.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\Graphics\Shader.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\Graphics\SwapChain.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\System\Graphics\CommandQueue.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
