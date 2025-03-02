@@ -17,25 +17,9 @@ namespace Engine {
 		class Supervision;
 	}
 
-	/// @brief シングルトンの基底クラス
-	class _SingletonBase
-	{
-	public:
-		/// @brief 初期化処理 ※オーバーライドしてください
-		virtual bool Init() { return true; }
-		/// @brief 更新処理 ※オーバーライドしてください
-		virtual void Update() {}
-
-	protected:
-		/// @brief コンストラクタ
-		_SingletonBase() {}
-		/// @brief デストラクタ
-		virtual ~_SingletonBase() {}
-	};
-
 	/// @brief シングルトンのインスタンスを生成・保持するクラス
 	template<typename Type>
-	class Singleton :public _SingletonBase
+	class Singleton
 	{
 	public:
 		/// @brief インスタンスを生成する

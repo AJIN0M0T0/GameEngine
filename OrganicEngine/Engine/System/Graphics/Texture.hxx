@@ -27,12 +27,16 @@ namespace Engine {
 		class DirectX11Texture : public iTexture
 		{
 		public:
+			void Load(const std::string& Path) override;
+			void Bind() override;
 		private:
 		};
 
 		class DirectX12Texture : public iTexture
 		{
 		public:
+			void Load(const std::string& Path) override;
+			void Bind() override;
 		private:
 		};
 
@@ -52,23 +56,23 @@ namespace Engine {
 			virtual ~iTextureFactory() = default;
 		};
 
-		//class DirectX11TextureFactory : public iTextureFactory
-		//{
-		//public:
-		//	inline iTexture* Create() override
-		//	{
-		//		return new DirectX11Texture();
-		//	}
-		//};
+		class DirectX11TextureFactory : public iTextureFactory
+		{
+		public:
+			inline iTexture* Create() override
+			{
+				return new DirectX11Texture();
+			}
+		};
 
-		//class DirectX12TextureFactory : public iTextureFactory
-		//{
-		//public:
-		//	inline iTexture* Create() override
-		//	{
-		//		return new DirectX12Texture();
-		//	}
-		//};
+		class DirectX12TextureFactory : public iTextureFactory
+		{
+		public:
+			inline iTexture* Create() override
+			{
+				return new DirectX12Texture();
+			}
+		};
 
 
 		//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
