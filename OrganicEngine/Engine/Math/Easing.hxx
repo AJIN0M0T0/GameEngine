@@ -8,7 +8,7 @@
 #ifndef _____Easing_HXX_____
 #define _____Easing_HXX_____
 
-namespace Engine {
+namespace Engine::Math {
 
 	enum class Ease
 	{

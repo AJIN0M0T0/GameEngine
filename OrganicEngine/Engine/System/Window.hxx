@@ -14,14 +14,17 @@
 
 namespace Engine {
 	class Window final
-		:public Singleton<Window>
+		:public System::Singleton<Window>
 	{
-		friend class Singleton<Window>;
+		friend class System::Singleton<Window>;
 	public:
 		void SettingWindow(HINSTANCE hInstance, int nCmdShow);
 		void ShowWindow();
 
 		inline MSG GetMSG() { return m_message; }
+		inline std::pair<UINT, UINT> GetScreenSize() { return std::make_pair(SCREEN_WIDTH, SCREEN_HEIGHT); }
+		inline HWND GetHWND() { return m_hWnd; }
+		inline bool IsFullScreen() { return m_bFullScreen; }
 
 		static LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 

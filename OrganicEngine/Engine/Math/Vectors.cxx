@@ -8,70 +8,70 @@ ID Engine::unique_ID::m_Counter = 0;
 //								fVec2								//
 //																	//
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
-bool Engine::operator==(const Engine::fVec2& Left, const Engine::fVec2& Right)
+bool Engine::Math::operator==(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans &= Left.v[i] == Right.v[i];
 	return ans;
 }
-bool Engine::operator!=(const Engine::fVec2& Left, const Engine::fVec2& Right)
+bool Engine::Math::operator!=(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
 	return !(Left == Right);
 }
-bool Engine::operator>(const Engine::fVec2& Left, const Engine::fVec2& Right)
+bool Engine::Math::operator>(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans &= Left.v[i] > Right.v[i];
 	return ans;
 }
-bool Engine::operator<(const Engine::fVec2& Left, const Engine::fVec2& Right)
+bool Engine::Math::operator<(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans &= Left.v[i] < Right.v[i];
 	return ans;
 }
-bool Engine::operator>=(const Engine::fVec2& Left, const Engine::fVec2& Right)
+bool Engine::Math::operator>=(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans &= Left.v[i] >= Right.v[i];
 	return ans;
 }
-bool Engine::operator<=(const Engine::fVec2& Left, const Engine::fVec2& Right)
+bool Engine::Math::operator<=(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans &= Left.v[i] <= Right.v[i];
 	return ans;
 }
-Engine::fVec2 Engine::operator+(const Engine::fVec2& Left, const Engine::fVec2& Right)
+Engine::Math::fVec2 Engine::Math::operator+(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right.v[i];
 	return ans;
 }
-Engine::fVec2 Engine::operator-(const Engine::fVec2& Left, const Engine::fVec2& Right)
+Engine::Math::fVec2 Engine::Math::operator-(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right.v[i];
 	return ans;
 }
-Engine::fVec2 Engine::operator*(const Engine::fVec2& Left, const Engine::fVec2& Right)
+Engine::Math::fVec2 Engine::Math::operator*(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right.v[i];
 	return ans;
 }
-Engine::fVec2 Engine::operator/(const Engine::fVec2& Left, const Engine::fVec2& Right)
+Engine::Math::fVec2 Engine::Math::operator/(const Engine::Math::fVec2& Left, const Engine::Math::fVec2& Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 	{
 		if (Right.v[i] != 0.0f)
 			ans.v[i] = Left.v[i] / Right.v[i];
@@ -80,31 +80,31 @@ Engine::fVec2 Engine::operator/(const Engine::fVec2& Left, const Engine::fVec2& 
 	}
 	return ans;
 }
-Engine::fVec2 Engine::operator+(const Engine::fVec2& Left, const float Right)
+Engine::Math::fVec2 Engine::Math::operator+(const Engine::Math::fVec2& Left, const float Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right;
 	return ans;
 }
-Engine::fVec2 Engine::operator-(const Engine::fVec2& Left, const float Right)
+Engine::Math::fVec2 Engine::Math::operator-(const Engine::Math::fVec2& Left, const float Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right;
 	return ans;
 }
-Engine::fVec2 Engine::operator*(const Engine::fVec2& Left, const float Right)
+Engine::Math::fVec2 Engine::Math::operator*(const Engine::Math::fVec2& Left, const float Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right;
 	return ans;
 }
-Engine::fVec2 Engine::operator/(const Engine::fVec2& Left, const float Right)
+Engine::Math::fVec2 Engine::Math::operator/(const Engine::Math::fVec2& Left, const float Right)
 {
-	Engine::fVec2 ans;
-	for (int i = 0; i < Engine::fVec2::_SuffixNum; i++)
+	Engine::Math::fVec2 ans;
+	for (int i = 0; i < Engine::Math::fVec2::_SuffixNum; i++)
 	{
 		if (Right != 0.0f)
 			ans.v[i] = Left.v[i] / Right;
@@ -116,73 +116,73 @@ Engine::fVec2 Engine::operator/(const Engine::fVec2& Left, const float Right)
 
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
 //																	//
-//								Engine::fVec3								//
+//								Engine::Math::fVec3								//
 //																	//
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
-bool Engine::operator==(const Engine::fVec3& Left, const Engine::fVec3& Right)
+bool Engine::Math::operator==(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans &= Left.v[i] == Right.v[i];
 	return ans;
 }
-bool Engine::operator!=(const Engine::fVec3& Left, const Engine::fVec3& Right)
+bool Engine::Math::operator!=(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
 	return !(Left == Right);
 }
-bool Engine::operator>(const Engine::fVec3& Left, const Engine::fVec3& Right)
+bool Engine::Math::operator>(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans &= Left.v[i] > Right.v[i];
 	return ans;
 }
-bool Engine::operator<(const Engine::fVec3& Left, const Engine::fVec3& Right)
+bool Engine::Math::operator<(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans &= Left.v[i] < Right.v[i];
 	return ans;
 }
-bool Engine::operator>=(const Engine::fVec3& Left, const Engine::fVec3& Right)
+bool Engine::Math::operator>=(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans &= Left.v[i] >= Right.v[i];
 	return ans;
 }
-bool Engine::operator<=(const Engine::fVec3& Left, const Engine::fVec3& Right)
+bool Engine::Math::operator<=(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans &= Left.v[i] <= Right.v[i];
 	return ans;
 }
-Engine::fVec3 Engine::operator+(const Engine::fVec3& Left, const Engine::fVec3& Right)
+Engine::Math::fVec3 Engine::Math::operator+(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right.v[i];
 	return ans;
 }
-Engine::fVec3 Engine::operator-(const Engine::fVec3& Left, const Engine::fVec3& Right)
+Engine::Math::fVec3 Engine::Math::operator-(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right.v[i];
 	return ans;
 }
-Engine::fVec3 Engine::operator*(const Engine::fVec3& Left, const Engine::fVec3& Right)
+Engine::Math::fVec3 Engine::Math::operator*(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right.v[i];
 	return ans;
 }
-Engine::fVec3 Engine::operator/(const Engine::fVec3& Left, const Engine::fVec3& Right)
+Engine::Math::fVec3 Engine::Math::operator/(const Engine::Math::fVec3& Left, const Engine::Math::fVec3& Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 	{
 		if (Right.v[i] != 0.0f)
 			ans.v[i] = Left.v[i] / Right.v[i];
@@ -191,31 +191,31 @@ Engine::fVec3 Engine::operator/(const Engine::fVec3& Left, const Engine::fVec3& 
 	}
 	return ans;
 }
-Engine::fVec3 Engine::operator+(const Engine::fVec3& Left, const float Right)
+Engine::Math::fVec3 Engine::Math::operator+(const Engine::Math::fVec3& Left, const float Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right;
 	return ans;
 }
-Engine::fVec3 Engine::operator-(const Engine::fVec3& Left, const float Right)
+Engine::Math::fVec3 Engine::Math::operator-(const Engine::Math::fVec3& Left, const float Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right;
 	return ans;
 }
-Engine::fVec3 Engine::operator*(const Engine::fVec3& Left, const float Right)
+Engine::Math::fVec3 Engine::Math::operator*(const Engine::Math::fVec3& Left, const float Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right;
 	return ans;
 }
-Engine::fVec3 Engine::operator/(const Engine::fVec3& Left, const float Right)
+Engine::Math::fVec3 Engine::Math::operator/(const Engine::Math::fVec3& Left, const float Right)
 {
-	Engine::fVec3 ans;
-	for (int i = 0; i < Engine::fVec3::_SuffixNum; i++)
+	Engine::Math::fVec3 ans;
+	for (int i = 0; i < Engine::Math::fVec3::_SuffixNum; i++)
 	{
 		if (Right != 0.0f)
 			ans.v[i] = Left.v[i] / Right;
@@ -227,73 +227,73 @@ Engine::fVec3 Engine::operator/(const Engine::fVec3& Left, const float Right)
 
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
 //																	//
-//								Engine::fVec4								//
+//								Engine::Math::fVec4								//
 //																	//
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
-bool Engine::operator==(const Engine::fVec4& Left, const Engine::fVec4& Right)
+bool Engine::Math::operator==(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans &= Left.v[i] == Right.v[i];
 	return ans;
 }
-bool Engine::operator!=(const Engine::fVec4& Left, const Engine::fVec4& Right)
+bool Engine::Math::operator!=(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
 	return !(Left == Right);
 }
-bool Engine::operator>(const Engine::fVec4& Left, const Engine::fVec4& Right)
+bool Engine::Math::operator>(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans &= Left.v[i] > Right.v[i];
 	return ans;
 }
-bool Engine::operator<(const Engine::fVec4& Left, const Engine::fVec4& Right)
+bool Engine::Math::operator<(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans &= Left.v[i] < Right.v[i];
 	return ans;
 }
-bool Engine::operator>=(const Engine::fVec4& Left, const Engine::fVec4& Right)
+bool Engine::Math::operator>=(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans &= Left.v[i] >= Right.v[i];
 	return ans;
 }
-bool Engine::operator<=(const Engine::fVec4& Left, const Engine::fVec4& Right)
+bool Engine::Math::operator<=(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans &= Left.v[i] <= Right.v[i];
 	return ans;
 }
-Engine::fVec4 Engine::operator+(const Engine::fVec4& Left, const Engine::fVec4& Right)
+Engine::Math::fVec4 Engine::Math::operator+(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right.v[i];
 	return ans;
 }
-Engine::fVec4 Engine::operator-(const Engine::fVec4& Left, const Engine::fVec4& Right)
+Engine::Math::fVec4 Engine::Math::operator-(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right.v[i];
 	return ans;
 }
-Engine::fVec4 Engine::operator*(const Engine::fVec4& Left, const Engine::fVec4& Right)
+Engine::Math::fVec4 Engine::Math::operator*(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right.v[i];
 	return ans;
 }
-Engine::fVec4 Engine::operator/(const Engine::fVec4& Left, const Engine::fVec4& Right)
+Engine::Math::fVec4 Engine::Math::operator/(const Engine::Math::fVec4& Left, const Engine::Math::fVec4& Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 	{
 		if (Right.v[i] != 0.0f)
 			ans.v[i] = Left.v[i] / Right.v[i];
@@ -302,31 +302,31 @@ Engine::fVec4 Engine::operator/(const Engine::fVec4& Left, const Engine::fVec4& 
 	}
 	return ans;
 }
-Engine::fVec4 Engine::operator+(const Engine::fVec4& Left, const float Right)
+Engine::Math::fVec4 Engine::Math::operator+(const Engine::Math::fVec4& Left, const float Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right;
 	return ans;
 }
-Engine::fVec4 Engine::operator-(const Engine::fVec4& Left, const float Right)
+Engine::Math::fVec4 Engine::Math::operator-(const Engine::Math::fVec4& Left, const float Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right;
 	return ans;
 }
-Engine::fVec4 Engine::operator*(const Engine::fVec4& Left, const float Right)
+Engine::Math::fVec4 Engine::Math::operator*(const Engine::Math::fVec4& Left, const float Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right;
 	return ans;
 }
-Engine::fVec4 Engine::operator/(const Engine::fVec4& Left, const float Right)
+Engine::Math::fVec4 Engine::Math::operator/(const Engine::Math::fVec4& Left, const float Right)
 {
-	Engine::fVec4 ans;
-	for (int i = 0; i < Engine::fVec4::_SuffixNum; i++)
+	Engine::Math::fVec4 ans;
+	for (int i = 0; i < Engine::Math::fVec4::_SuffixNum; i++)
 	{
 		if (Right != 0.0f)
 			ans.v[i] = Left.v[i] / Right;
@@ -341,70 +341,70 @@ Engine::fVec4 Engine::operator/(const Engine::fVec4& Left, const float Right)
 //								nVec2								//
 //																	//
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
-bool Engine::operator==(const Engine::nVec2& Left, const Engine::nVec2& Right)
+bool Engine::Math::operator==(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans &= Left.v[i] == Right.v[i];
 	return ans;
 }
-bool Engine::operator!=(const Engine::nVec2& Left, const Engine::nVec2& Right)
+bool Engine::Math::operator!=(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
 	return !(Left == Right);
 }
-bool Engine::operator>(const Engine::nVec2& Left, const Engine::nVec2& Right)
+bool Engine::Math::operator>(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans &= Left.v[i] > Right.v[i];
 	return ans;
 }
-bool Engine::operator<(const Engine::nVec2& Left, const Engine::nVec2& Right)
+bool Engine::Math::operator<(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans &= Left.v[i] < Right.v[i];
 	return ans;
 }
-bool Engine::operator>=(const Engine::nVec2& Left, const Engine::nVec2& Right)
+bool Engine::Math::operator>=(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans &= Left.v[i] >= Right.v[i];
 	return ans;
 }
-bool Engine::operator<=(const Engine::nVec2& Left, const Engine::nVec2& Right)
+bool Engine::Math::operator<=(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans &= Left.v[i] <= Right.v[i];
 	return ans;
 }
-Engine::nVec2 Engine::operator+(const Engine::nVec2& Left, const Engine::nVec2& Right)
+Engine::Math::nVec2 Engine::Math::operator+(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right.v[i];
 	return ans;
 }
-Engine::nVec2 Engine::operator-(const Engine::nVec2& Left, const Engine::nVec2& Right)
+Engine::Math::nVec2 Engine::Math::operator-(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right.v[i];
 	return ans;
 }
-Engine::nVec2 Engine::operator*(const Engine::nVec2& Left, const Engine::nVec2& Right)
+Engine::Math::nVec2 Engine::Math::operator*(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right.v[i];
 	return ans;
 }
-Engine::nVec2 Engine::operator/(const Engine::nVec2& Left, const Engine::nVec2& Right)
+Engine::Math::nVec2 Engine::Math::operator/(const Engine::Math::nVec2& Left, const Engine::Math::nVec2& Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 	{
 		if (Right.v[i] != 0)
 			ans.v[i] = Left.v[i] / Right.v[i];
@@ -413,31 +413,31 @@ Engine::nVec2 Engine::operator/(const Engine::nVec2& Left, const Engine::nVec2& 
 	}
 	return ans;
 }
-Engine::nVec2 Engine::operator+(const Engine::nVec2& Left, const int Right)
+Engine::Math::nVec2 Engine::Math::operator+(const Engine::Math::nVec2& Left, const int Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right;
 	return ans;
 }
-Engine::nVec2 Engine::operator-(const Engine::nVec2& Left, const int Right)
+Engine::Math::nVec2 Engine::Math::operator-(const Engine::Math::nVec2& Left, const int Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right;
 	return ans;
 }
-Engine::nVec2 Engine::operator*(const Engine::nVec2& Left, const int Right)
+Engine::Math::nVec2 Engine::Math::operator*(const Engine::Math::nVec2& Left, const int Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right;
 	return ans;
 }
-Engine::nVec2 Engine::operator/(const Engine::nVec2& Left, const int Right)
+Engine::Math::nVec2 Engine::Math::operator/(const Engine::Math::nVec2& Left, const int Right)
 {
-	Engine::nVec2 ans;
-	for (int i = 0; i < Engine::nVec2::_SuffixNum; i++)
+	Engine::Math::nVec2 ans;
+	for (int i = 0; i < Engine::Math::nVec2::_SuffixNum; i++)
 	{
 		if (Right != 0)
 			ans.v[i] = Left.v[i] / Right;
@@ -452,70 +452,70 @@ Engine::nVec2 Engine::operator/(const Engine::nVec2& Left, const int Right)
 //								nVec3								//
 //																	//
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
-bool Engine::operator==(const Engine::nVec3& Left, const Engine::nVec3& Right)
+bool Engine::Math::operator==(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans &= Left.v[i] == Right.v[i];
 	return ans;
 }
-bool Engine::operator!=(const Engine::nVec3& Left, const Engine::nVec3& Right)
+bool Engine::Math::operator!=(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
 	return !(Left == Right);
 }
-bool Engine::operator>(const Engine::nVec3& Left, const Engine::nVec3& Right)
+bool Engine::Math::operator>(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans &= Left.v[i] > Right.v[i];
 	return ans;
 }
-bool Engine::operator<(const Engine::nVec3& Left, const Engine::nVec3& Right)
+bool Engine::Math::operator<(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans &= Left.v[i] < Right.v[i];
 	return ans;
 }
-bool Engine::operator>=(const Engine::nVec3& Left, const Engine::nVec3& Right)
+bool Engine::Math::operator>=(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans &= Left.v[i] >= Right.v[i];
 	return ans;
 }
-bool Engine::operator<=(const Engine::nVec3& Left, const Engine::nVec3& Right)
+bool Engine::Math::operator<=(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans &= Left.v[i] <= Right.v[i];
 	return ans;
 }
-Engine::nVec3 Engine::operator+(const Engine::nVec3& Left, const Engine::nVec3& Right)
+Engine::Math::nVec3 Engine::Math::operator+(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right.v[i];
 	return ans;
 }
-Engine::nVec3 Engine::operator-(const Engine::nVec3& Left, const Engine::nVec3& Right)
+Engine::Math::nVec3 Engine::Math::operator-(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right.v[i];
 	return ans;
 }
-Engine::nVec3 Engine::operator*(const Engine::nVec3& Left, const Engine::nVec3& Right)
+Engine::Math::nVec3 Engine::Math::operator*(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right.v[i];
 	return ans;
 }
-Engine::nVec3 Engine::operator/(const Engine::nVec3& Left, const Engine::nVec3& Right)
+Engine::Math::nVec3 Engine::Math::operator/(const Engine::Math::nVec3& Left, const Engine::Math::nVec3& Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 	{
 		if (Right.v[i] != 0)
 			ans.v[i] = Left.v[i] / Right.v[i];
@@ -524,31 +524,31 @@ Engine::nVec3 Engine::operator/(const Engine::nVec3& Left, const Engine::nVec3& 
 	}
 	return ans;
 }
-Engine::nVec3 Engine::operator+(const Engine::nVec3& Left, const int Right)
+Engine::Math::nVec3 Engine::Math::operator+(const Engine::Math::nVec3& Left, const int Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right;
 	return ans;
 }
-Engine::nVec3 Engine::operator-(const Engine::nVec3& Left, const int Right)
+Engine::Math::nVec3 Engine::Math::operator-(const Engine::Math::nVec3& Left, const int Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right;
 	return ans;
 }
-Engine::nVec3 Engine::operator*(const Engine::nVec3& Left, const int Right)
+Engine::Math::nVec3 Engine::Math::operator*(const Engine::Math::nVec3& Left, const int Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right;
 	return ans;
 }
-Engine::nVec3 Engine::operator/(const Engine::nVec3& Left, const int Right)
+Engine::Math::nVec3 Engine::Math::operator/(const Engine::Math::nVec3& Left, const int Right)
 {
-	Engine::nVec3 ans;
-	for (int i = 0; i < Engine::nVec3::_SuffixNum; i++)
+	Engine::Math::nVec3 ans;
+	for (int i = 0; i < Engine::Math::nVec3::_SuffixNum; i++)
 	{
 		if (Right != 0)
 			ans.v[i] = Left.v[i] / Right;
@@ -563,70 +563,70 @@ Engine::nVec3 Engine::operator/(const Engine::nVec3& Left, const int Right)
 //								nVec4								//
 //																	//
 //__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
-bool Engine::operator==(const Engine::nVec4& Left, const Engine::nVec4& Right)
+bool Engine::Math::operator==(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans &= Left.v[i] == Right.v[i];
 	return ans;
 }
-bool Engine::operator!=(const Engine::nVec4& Left, const Engine::nVec4& Right)
+bool Engine::Math::operator!=(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
 	return !(Left == Right);
 }
-bool Engine::operator>(const Engine::nVec4& Left, const Engine::nVec4& Right)
+bool Engine::Math::operator>(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans &= Left.v[i] > Right.v[i];
 	return ans;
 }
-bool Engine::operator<(const Engine::nVec4& Left, const Engine::nVec4& Right)
+bool Engine::Math::operator<(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans &= Left.v[i] < Right.v[i];
 	return ans;
 }
-bool Engine::operator>=(const Engine::nVec4& Left, const Engine::nVec4& Right)
+bool Engine::Math::operator>=(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans &= Left.v[i] >= Right.v[i];
 	return ans;
 }
-bool Engine::operator<=(const Engine::nVec4& Left, const Engine::nVec4& Right)
+bool Engine::Math::operator<=(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
 	bool ans = true;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans &= Left.v[i] <= Right.v[i];
 	return ans;
 }
-Engine::nVec4 Engine::operator+(const Engine::nVec4& Left, const Engine::nVec4& Right)
+Engine::Math::nVec4 Engine::Math::operator+(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right.v[i];
 	return ans;
 }
-Engine::nVec4 Engine::operator-(const Engine::nVec4& Left, const Engine::nVec4& Right)
+Engine::Math::nVec4 Engine::Math::operator-(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right.v[i];
 	return ans;
 }
-Engine::nVec4 Engine::operator*(const Engine::nVec4& Left, const Engine::nVec4& Right)
+Engine::Math::nVec4 Engine::Math::operator*(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right.v[i];
 	return ans;
 }
-Engine::nVec4 Engine::operator/(const Engine::nVec4& Left, const Engine::nVec4& Right)
+Engine::Math::nVec4 Engine::Math::operator/(const Engine::Math::nVec4& Left, const Engine::Math::nVec4& Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 	{
 		if (Right.v[i] != 0)
 			ans.v[i] = Left.v[i] / Right.v[i];
@@ -635,31 +635,31 @@ Engine::nVec4 Engine::operator/(const Engine::nVec4& Left, const Engine::nVec4& 
 	}
 	return ans;
 }
-Engine::nVec4 Engine::operator+(const Engine::nVec4& Left, const int Right)
+Engine::Math::nVec4 Engine::Math::operator+(const Engine::Math::nVec4& Left, const int Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] + Right;
 	return ans;
 }
-Engine::nVec4 Engine::operator-(const Engine::nVec4& Left, const int Right)
+Engine::Math::nVec4 Engine::Math::operator-(const Engine::Math::nVec4& Left, const int Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] - Right;
 	return ans;
 }
-Engine::nVec4 Engine::operator*(const Engine::nVec4& Left, const int Right)
+Engine::Math::nVec4 Engine::Math::operator*(const Engine::Math::nVec4& Left, const int Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 		ans.v[i] = Left.v[i] * Right;
 	return ans;
 }
-Engine::nVec4 Engine::operator/(const Engine::nVec4& Left, const int Right)
+Engine::Math::nVec4 Engine::Math::operator/(const Engine::Math::nVec4& Left, const int Right)
 {
-	Engine::nVec4 ans;
-	for (int i = 0; i < Engine::nVec4::_SuffixNum; i++)
+	Engine::Math::nVec4 ans;
+	for (int i = 0; i < Engine::Math::nVec4::_SuffixNum; i++)
 	{
 		if (Right != 0)
 			ans.v[i] = Left.v[i] / Right;
@@ -669,11 +669,11 @@ Engine::nVec4 Engine::operator/(const Engine::nVec4& Left, const int Right)
 	return ans;
 }
 
-float Engine::Vec::length(const Engine::fVec3& Vector)
+float Engine::Math::Vec::length(const Engine::Math::fVec3& Vector)
 {
 	return powf(Vector.x * Vector.x + Vector.y * Vector.y + Vector.z * Vector.z, 0.5f);
 }
-Engine::fVec3 Engine::Vec::Nomalize(Engine::fVec3 Vector)
+Engine::Math::fVec3 Engine::Math::Vec::Nomalize(Engine::Math::fVec3 Vector)
 {
 	return (Vector / length(Vector));
 }

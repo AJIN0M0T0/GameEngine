@@ -10,6 +10,10 @@
 
 // =-=-= インクルード部 =-=-=
 
+// 前方定義
+struct IDXGISwapChain1;
+struct IDXGISwapChain4;
+
 namespace Engine {
 	namespace Graphic {
 		class iSwapChain
@@ -17,28 +21,27 @@ namespace Engine {
 		public:
 			virtual ~iSwapChain() = default;
 
+			virtual void Create() = 0;
 			virtual void Present() = 0;
 		};
 
-		// 前方定義
-		class IDXGISwapChain;
-
+		
 		class DirectX11SwapChain 
 			: public iSwapChain
 		{
 		public:
+			void Create() override;
 			void Present() override;
 		private:
-			std::unique_ptr<IDXGISwapChain> m_swapChain;
+			IDXGISwapChain1* m_swapChain;
 		};
 
-		// 前方定義
-		class IDXGISwapChain4;
 
 		class DirectX12SwapChain 
 			: public iSwapChain
 		{
 		public:
+			void Create() override;
 			void Present() override;
 		private:
 			std::unique_ptr<IDXGISwapChain4> m_SwapChain;

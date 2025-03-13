@@ -13,8 +13,14 @@
 #include "MathDef.hxx"
 #include <string>
 
-namespace Engine
+namespace Engine::Math
 {
+#ifdef _DIRECTXs_PRJ
+#include <DirectXMath.h>
+	using fVec4x4 = DirectX::XMFLOAT4X4;
+	using Matrix = DirectX::XMMATRIX;
+#endif // _DIRECTXs_PRJ
+
 
 	//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
 	//																	//
@@ -219,12 +225,7 @@ namespace Engine
 		/// @param Vector 正規化するベクトル
 		/// @return 正規化されたベクトル
 		fVec3 Nomalize(fVec3 Vector);
-
-#ifdef DIRECTX11_PRJ
-		DirectX::XMFLOAT3 ToXMFLOAT3(const fVec3& Vector);
-#endif // DIRECTX11_PRJ
 	}
-
 };
 
 #endif // !_____Vectors_HXX_____

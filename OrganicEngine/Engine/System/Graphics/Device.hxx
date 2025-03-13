@@ -10,8 +10,44 @@
 
 // =-=-= インクルード部 =-=-=
 
+// 前方定義
+struct ID3D11Device;
+struct ID3D11DeviceContext;
+struct ID3D11RasterizerState;
+struct ID3D11DepthStencilState;
+struct ID3D11SamplerState;
+struct ID3D11BlendState;
+struct ID3D12Device;
+
 namespace Engine {
 	namespace Graphic {
+		enum BlendMode
+		{
+			BLEND_NONE,
+			BLEND_ALPHA,
+			BLEND_ADD,
+			BLEND_ADDALPHA,
+			BLEND_SUB,
+			BLEND_SCREEN,
+			BLEND_MAX
+		};
+
+		enum SamplerState
+		{
+			SAMPLER_LINEAR,
+			SAMPLER_POINT,
+			SAMPLER_MAX
+		};
+
+		enum DepthState
+		{
+			DEPTH_ENABLE_WRITE_TEST,
+			DEPTH_ENABLE_TEST,
+			DEPTH_DISABLE,
+			DEPTH_MAX
+		};
+
+
 		class iDevice
 		{
 		public:
@@ -22,10 +58,6 @@ namespace Engine {
 			//HRESULT virtual CreateBuffer(const void* bufferDesc, const void* SubresourceData, void** ppBuffer) = 0;
 		};
 
-		// 前方定義
-		class ID3D11Device;
-		class ID3D11DeviceContext;
-
 		class DirectX11Device 
 			: public iDevice
 		{
@@ -33,13 +65,17 @@ namespace Engine {
 			bool Initialize() override;
 			void CreateRenderTarget() override;
 
+			inline ID3D11Device* GetDevice() { return m_Device; }
 		private:
-			std::unique_ptr<ID3D11Device> m_Device;
-			std::unique_ptr<ID3D11DeviceContext> m_DeviceContext;
+			ID3D11Device* m_Device;
+			ID3D11DeviceContext* m_DeviceContext;
+			ID3D11RasterizerState* m_pRasterizerState[3];
+			ID3D11BlendState* m_pBlendState[BLEND_MAX];
+			ID3D11SamplerState* m_pSamplerState[SAMPLER_MAX];
+			ID3D11DepthStencilState* m_pDepthStencilState[DEPTH_MAX];
 		};
 
-		// 前方定義
-		class ID3D12Device;
+
 
 		class DirectX12Device 
 			: public iDevice

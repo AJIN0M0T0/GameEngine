@@ -33,6 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			DebugString_(std::to_string(Engine::Time::GetFPS()) + "\n")
 			Engine::System::Supervision::Updater();
+			Engine::System::Supervision::Drawings();
 			Engine::Time::TimerUpdate();
 		}
 

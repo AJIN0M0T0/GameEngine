@@ -2,7 +2,9 @@
 
 // =-=-= インクルード部 =-=-=
 #include "Window.hxx"
-
+#include "Graphics/GraphicsAPI.hxx"
+#include "ThreadPool.hxx"
+#include "SceneManager.hxx"
 
 // =-=-= インスタンス変数の実体化 =-=-=
 std::stack<void(*)()> Engine::System::Supervision::m_finalizers;//終了処理
@@ -16,7 +18,12 @@ bool Engine::System::Supervision::Initialize()
 	bool Success = true;
 
 	//Success &= FalseCheck(~~~class::CreateInstance().Init());	←例
-	Success &= FalseCheck(Window::CreateInstance().Init());
+	Window::CreateInstance();
+	Graphic::GraphicsFactory& graph = Graphic::GraphicsFactory::CreateInstance();
+	graph.CreateGraphicsAPI();
+
+	ThreadPool::CreateInstance();
+
 
 	return Success;
 }
@@ -24,7 +31,7 @@ bool Engine::System::Supervision::Initialize()
 /// @brief シングルトンの更新処理
 void Engine::System::Supervision::Updater()
 {// ここに更新処理を追加
-	
+	ThreadPool::GetInstance().Update(); 
 	
 	return;
 }
@@ -41,6 +48,21 @@ void Engine::System::Supervision::_addFinalizer(void(*func)())
 {
 	std::lock_guard<std::mutex> lock(gMutex);// 排他制御
 	m_finalizers.push(func);// 終了処理を追加
+}
+
+void Engine::System::Supervision::Drawings()
+{
+	Graphic::GraphicsFactory& api =	Graphic::GraphicsFactory::GetInstance();
+
+	iScene* scene = Engine::System::SceneManager::GetInstance().GetNowScene();
+
+///////////////////////////////////////////
+	koko;
+
+	Engine::Math::Matrix origin = { {0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f} };
+	scene->Draw(origin);
+
+	api->RenderFrame();
 }
 
 /// @brief 終了処理を行う

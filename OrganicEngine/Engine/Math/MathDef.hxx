@@ -42,16 +42,22 @@ namespace Engine {
 	/// @brief メタ関数
 	namespace Meta {
 		// 掛け算のメタ関数
-		template <float a, float b > inline constexpr float Multiply() { return a * b; }
-		template <uint32 a, uint32 b> inline constexpr float Multiply() { return a * b; }
+		template <float a, float b > 
+		inline constexpr float Multiply() { return a * b; }
+		template <uint32 a, uint32 b> 
+		inline constexpr float Multiply() { return a * b; }
 
 		// 割り算のメタ関数
-		template <float a, float b > inline constexpr float Division() { return a / b; }
-		template <uint32 a, uint32 b> inline constexpr float Division() { return a / b; }
+		template <float a, float b > 
+		inline constexpr float Division() { return a / b; }
+		template <uint32 a, uint32 b> 
+		inline constexpr float Division() { return a / b; }
 
 		// 階乗のメタ関数
-		template <uint32 N> inline constexpr uint32 Factorial() { return N * Factorial<N - 1>(); }
-		template <> inline constexpr uint32 Factorial<0>() { return 1; }
+		template <uint32 N> 
+		inline constexpr uint32 Factorial() { return N * Factorial<N - 1>(); }
+		template <> 
+		inline constexpr uint32 Factorial<0>() { return 1; }
 	}
 
 	/// @brief 角度をラジアン角に変換

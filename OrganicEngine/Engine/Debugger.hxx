@@ -15,11 +15,11 @@
 namespace Engine {
 	/// @brief エラーの種類
 	enum class ErrorType {
-		isFalse_Bool, // Falseなら停止します
-		isFailure_HResult, // HResultが失敗していたら停止
-		isNullptr_pointer, // ポインタのNullチェック
+		isFalse_Bool,		// Falseなら停止します
+		isFailure_HResult,	// HResultが失敗していたら停止
+		isNullptr_pointer,	// ポインタのNullチェック
 		Singleton_Instance_nullptr, // シングルトンのインスタンスがnullptr
-		Unsetting_Factory, // ファクトリーが設定されていません
+		Unsetting_Factory,	// ファクトリーが設定されていません
 	};
 };
 

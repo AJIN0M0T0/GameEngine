@@ -9,7 +9,7 @@
 #define _____Allocator_HXX_____
 
 #ifdef DEBUG
-#define New(Type) new(0,typeid(Type),__FILE__, __LINE__) Type;
+#define New(Type) new(0,typeid(Type),__FILE__, __LINE__) Type
 void* operator new(size_t size, size_t pad, const type_info& type, const std::string& FileName, int Line);
 void* operator new[](size_t size, size_t pad, const type_info& type,const std::string& FileName, int Line);
 void operator delete(void* p, size_t size, const type_info& type, const std::string& FileName, int Line);

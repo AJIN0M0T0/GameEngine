@@ -181,6 +181,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Component.cxx" />
     <ClCompile Include="Engine\main.cxx">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -195,22 +196,34 @@
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
     </ClCompile>
     <ClCompile Include="Engine\Math\Easing.cxx" />
+    <ClCompile Include="Engine\Math\Transform.cxx" />
     <ClCompile Include="Engine\Math\Vectors.cxx" />
     <ClCompile Include="Engine\System\Graphics\CommandQueue.cxx" />
     <ClCompile Include="Engine\System\Graphics\Shader.cxx" />
     <ClCompile Include="Engine\System\Graphics\SwapChain.cxx" />
+    <ClCompile Include="Engine\System\SceneManager.cxx" />
     <ClCompile Include="Engine\System\Supervision.cxx" />
     <ClCompile Include="Engine\System\Allocator.cxx" />
     <ClCompile Include="Engine\System\Graphics\Device.cxx" />
     <ClCompile Include="Engine\System\Graphics\GraphicsAPI.cxx" />
+    <ClCompile Include="Object\GameObject.cxx" />
+    <ClCompile Include="Object\Object.cxx" />
+    <ClCompile Include="Object\SceneBase.cxx" />
+    <ClInclude Include="Component\Component.hxx" />
     <ClInclude Include="Engine\Math\MathDef.hxx" />
+    <ClInclude Include="Engine\Math\Transform.hxx" />
     <ClInclude Include="Engine\System\Graphics\CommandQueue.hxx" />
     <ClInclude Include="Engine\System\Graphics\Shader.hxx" />
     <ClInclude Include="Engine\System\Graphics\SwapChain.hxx" />
+    <ClInclude Include="Engine\System\SceneManager.hxx" />
     <ClInclude Include="Engine\System\Supervision.hxx" />
     <ClCompile Include="Engine\System\Graphics\Texture.cxx" />
+    <ClCompile Include="Engine\System\ThreadPool.cxx" />
     <ClCompile Include="Engine\System\Timer.cxx" />
     <ClCompile Include="Engine\System\Window.cxx" />
+    <ClInclude Include="Object\GameObject.hxx" />
+    <ClInclude Include="Object\Object.hxx" />
+    <ClInclude Include="Object\SceneBase.hxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Defines.hxx" />
@@ -223,6 +236,7 @@
     <ClInclude Include="Engine\System\Graphics\GraphicsAPI.hxx" />
     <ClInclude Include="Engine\System\Graphics\Texture.hxx" />
     <ClInclude Include="Engine\System\Singleton.hxx" />
+    <ClInclude Include="Engine\System\ThreadPool.hxx" />
     <ClInclude Include="Engine\System\Timer.hxx" />
     <ClInclude Include="Engine\System\Window.hxx" />
   </ItemGroup>

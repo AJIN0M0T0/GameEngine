@@ -26,7 +26,7 @@ namespace
 
 }
 
-namespace Engine {
+namespace Engine::Math {
 	// ネームスペース「 eas 」
 	namespace eas
 	{

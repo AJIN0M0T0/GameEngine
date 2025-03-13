@@ -75,6 +75,9 @@ namespace Engine {
 		};
 
 
+
+
+
 		//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
 		//																	//
 		//								Manager								//
@@ -82,9 +85,9 @@ namespace Engine {
 		//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
 
 		class TextureManager final
-			: public Singleton<TextureManager>
+			: public System::Singleton<TextureManager>
 		{
-			friend class Singleton<TextureManager>;
+			friend class System::Singleton<TextureManager>;
 		public:
 			void SetFactory(iTextureFactory* Factory);
 			iTexture* LoadTexture(const std::string& Path);

@@ -25,6 +25,8 @@ namespace Engine {
 			static bool Initialize();
 			/// @brief 更新処理を行う
 			static void Updater();
+			/// @brief 描画処理を行う
+			static void Drawings();
 			/// @brief 終了処理を行う
 			static void Finalize();
 
