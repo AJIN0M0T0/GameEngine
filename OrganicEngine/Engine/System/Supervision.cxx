@@ -56,8 +56,7 @@ void Engine::System::Supervision::Drawings()
 
 	iScene* scene = Engine::System::SceneManager::GetInstance().GetNowScene();
 
-///////////////////////////////////////////
-	koko;
+	
 
 	Engine::Math::Matrix origin = { {0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f} };
 	scene->Draw(origin);

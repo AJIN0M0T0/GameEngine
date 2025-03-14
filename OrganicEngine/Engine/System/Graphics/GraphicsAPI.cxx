@@ -1,4 +1,5 @@
 #include "GraphicsAPI.hxx"
+#include "Texture.hxx"
 
 using namespace Engine::Graphic;
 
@@ -37,8 +38,10 @@ GraphicsFactory& GraphicsFactory::CreateGraphicsAPI()
 	if (m_GraphicsAPI) return *this;
 #ifdef DIRECTX11_PRJ
 	m_GraphicsAPI = std::make_unique<GraphicsDirectX11>();
+	TextureManager::GetInstance().SetFactory(New(DirectX11TextureFactory));
 #elif defined(DIRECTX12_PRJ)
 	m_GraphicsAPI = std::make_unique<DirectX12Graphics>();
+	TextureManager::GetInstance().SetFactory(New(DirectX12TextureFactory));
 #endif // DIRECTX11_PRJ
 	return *this;
 }
