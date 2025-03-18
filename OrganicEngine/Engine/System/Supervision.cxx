@@ -5,6 +5,8 @@
 #include "Graphics/GraphicsAPI.hxx"
 #include "ThreadPool.hxx"
 #include "SceneManager.hxx"
+#include "../../Object/SceneObject/testScene.hxx"
+#include <d3d11.h>
 
 // =-=-= インスタンス変数の実体化 =-=-=
 std::stack<void(*)()> Engine::System::Supervision::m_finalizers;//終了処理
@@ -21,9 +23,12 @@ bool Engine::System::Supervision::Initialize()
 	Window::CreateInstance();
 	Graphic::GraphicsFactory& graph = Graphic::GraphicsFactory::CreateInstance();
 	graph.CreateGraphicsAPI();
+	graph->Initialize(Window::GetInstance().GetHWND(), 1280, 720);
+	Graphic::TextureManager::CreateInstance().SetFactory(graph.GetInstance()->GetiTextureFactory());
 
 	ThreadPool::CreateInstance();
-
+	SceneManager::CreateInstance();
+	SceneManager::GetInstance().ChangeScene<testScene>();
 
 	return Success;
 }
@@ -31,7 +36,9 @@ bool Engine::System::Supervision::Initialize()
 /// @brief シングルトンの更新処理
 void Engine::System::Supervision::Updater()
 {// ここに更新処理を追加
-	ThreadPool::GetInstance().Update(); 
+	ThreadPool::GetInstance().Update(); // スレッドプールの更新処理　※必ず先頭に記述
+
+	SceneManager::GetInstance().Update();
 	
 	return;
 }
@@ -53,10 +60,19 @@ void Engine::System::Supervision::_addFinalizer(void(*func)())
 void Engine::System::Supervision::Drawings()
 {
 	Graphic::GraphicsFactory& api =	Graphic::GraphicsFactory::GetInstance();
-
+	Graphic::TextureManager& tex = Graphic::TextureManager::GetInstance();
 	iScene* scene = Engine::System::SceneManager::GetInstance().GetNowScene();
 
-	
+	auto rtv = tex.RecordRenderTarget("default");
+	auto dsv = tex.RecordDepstStencil("default");
+	Math::fVec4 clearColor = { 0.5f,0.2f,0.3f,1.0f };
+
+	static_cast<ID3D11DeviceContext*>(api->GetiDevice()->GetDeviceContext())
+		->ClearRenderTargetView(static_cast<ID3D11RenderTargetView*>(rtv->GetView()), clearColor.v);
+	static_cast<ID3D11DeviceContext*>(api->GetiDevice()->GetDeviceContext())
+		->ClearDepthStencilView(static_cast<ID3D11DepthStencilView*>(dsv->GetView()), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+
 
 	Engine::Math::Matrix origin = { {0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,0.0f} };
 	scene->Draw(origin);

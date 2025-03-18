@@ -78,6 +78,9 @@
     <ClCompile Include="Component\Component.cxx">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Object\SceneObject\testScene.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Defines.hxx">
@@ -152,8 +155,15 @@
     <ClInclude Include="Component\Component.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\System\Graphics\GraphicDef.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SceneObject\testScene.hxx">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\defines.hlsli" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

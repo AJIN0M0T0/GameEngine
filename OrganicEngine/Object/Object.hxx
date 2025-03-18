@@ -23,16 +23,25 @@ public_Func
 	iObject* GetParent()const;
 	void AddChild(iObject* pChild);
 
+	/// @brief 
+	/// @tparam TypeObject 
+	/// @tparam  
+	/// @return 
 	template <typename TypeObject, typename = std::enable_if_t<std::is_base_of_v<iObject, TypeObject>>>
 	 TypeObject& thisCreateObject() {
-		TypeObject* pObject = new TypeObject();
+		 TypeObject* pObject = New(TypeObject());
 		this->AddChild(pObject);
 		Engine::System::SceneManager::GetInstance().m_InitQueue.push(pObject);
 		return *pObject;
 	}
 
+	/// @brief 初期化処理
+	/// @return 成功ならtrue
 	virtual bool Init() = 0;
+	/// @brief 更新処理
 	virtual void Update() = 0;
+	/// @brief 描画処理
+	/// @param Parentworld 自身のワールド座標
 	virtual void Draw(const Engine::Math::Matrix& world) = 0;
 
 	void Delete();

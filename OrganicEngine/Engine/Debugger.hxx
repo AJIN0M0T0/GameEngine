@@ -4,9 +4,7 @@
 //	 作成日時	：2025/02/23 21:46:38
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
-
 // !-!-! = 関数を直接参照せず、マクロを使用してください！ = !-!-!
-
 
 // =-=-= インクルードガード部 =-=-=
 #ifndef _____debugger_HXX_____
@@ -51,11 +49,11 @@ void _DebugStringOutput(const std::string& str);
 	template<typename Type>
 	Type* _NullptrCheckFunc(Type* ptr)
 	{
-		std::string stri;
-		stri += "■◆■◆■ !-!-!-! ■◆■◆■ ：";
-		stri += typeid(Type).name();
-		stri += " の [ nullptr ]が発生しました。参照・依存関係を見直してください。\n";
 		if (!ptr) {
+			std::string stri;
+			stri += "■◆■◆■ !-!-!-! ■◆■◆■ ：";
+			stri += typeid(Type).name();
+			stri += " の [ nullptr ]が発生しました。参照・依存関係を見直してください。\n";
 			_DebugStringOutput(stri);
 			DebugBreak();
 		}
@@ -85,6 +83,5 @@ void _DebugStringOutput(const std::string& str);
 #define DebugBreakPoint_ 
 
 #endif // !DEBUG
-
 
 #endif // !_____debugger_HXX_____

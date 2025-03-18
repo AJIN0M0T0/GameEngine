@@ -9,14 +9,10 @@
 #define _____Singleton_HXX_____
 
 // =-=-= インクルード部 =-=-=
-#include <stack>
-#include <mutex>
+#include "Supervision.hxx"
 
 namespace Engine {
 	namespace System {
-		class Supervision;
-
-
 		/// @brief シングルトンのインスタンスを生成・保持するクラス
 		template<typename Type>
 		class Singleton
@@ -35,7 +31,7 @@ namespace Engine {
 			/// @return インスタンス
 			static inline Type& GetInstance()
 			{
-				return *instance;
+				return *(NullptrCheck(instance) );
 			}
 
 		private:

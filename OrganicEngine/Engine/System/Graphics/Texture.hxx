@@ -12,11 +12,26 @@
 #include "../Singleton.hxx"
 #include <unordered_map>
 
+#ifdef SHIPPING
+#include <Windows.h>
+#endif // SHIPPING
+
 namespace Engine::Math {
 	struct fVec4;
 }
 
 enum DXGI_FORMAT;
+struct ID3D11ShaderResourceView;
+struct ID3D11Texture2D;
+struct D3D11_TEXTURE2D_DESC;
+struct ID3D11RenderTargetView;
+struct ID3D11DepthStencilView;
+
+struct ID3D12ShaderResourceView;
+struct ID3D12Texture2D;
+struct D3D12_TEXTURE2D_DESC;
+struct ID3D12RenderTargetView;
+struct ID3D12DepthStencilView;
 
 namespace Engine::Graphic {
 	class GraphicsFactory;
@@ -24,29 +39,61 @@ namespace Engine::Graphic {
 	class iTexture
 	{
 	public:
+		iTexture();
 		virtual ~iTexture() = default;
 
-		virtual void Load(const std::string& Path) = 0;
-		virtual void Bind() = 0;
+		inline uint16 GetWidth()const { return m_width; }
+		inline uint16 GetHeight()const { return m_height; }
+
+		virtual HRESULT Create(const char* fileName) = 0;
+		virtual HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) = 0;
+		virtual void* GetResource()const = 0;
+
+	protected:
+		uint16 m_width;
+		uint16 m_height;
+	};
+
+	struct SRVData
+	{
+		struct SRVs{
+			union {
+				ID3D11ShaderResourceView* p11SRV;
+				ID3D12ShaderResourceView* p12SRV;
+				};
+			inline explicit operator ID3D11ShaderResourceView* () { return p11SRV; }
+			inline explicit operator ID3D12ShaderResourceView* () { return p12SRV; }
+		} pSRV;
+		uint16 width;
+		uint16 height;
 	};
 
 	class DirectX11Texture 
-		: public iTexture
+		: virtual public iTexture
 	{
 	public:
-		void Load(const std::string& Path) override final;
-		void Bind() override ;
-	private:
+		DirectX11Texture();
+		virtual ~DirectX11Texture();
+
+		HRESULT Create(const char* fileName) override;
+		HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) override;
+		inline void* GetResource()const override { return m_pSRV.get()->pSRV.p11SRV; };
+
+	protected:
+		D3D11_TEXTURE2D_DESC MakeTexDesc(DXGI_FORMAT format, uint16 width, uint16 height);
+		virtual HRESULT CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData);
+
+	protected:
+		std::shared_ptr<SRVData> m_pSRV;
+		ID3D11Texture2D* m_pTex;
 	};
 
-	class DirectX12Texture 
-		: public iTexture
-	{
-	public:
-		void Load(const std::string& Path) override final;
-		void Bind() override ;
-	private:
-	};
+	//class DirectX12Texture 
+	//	: virtual public iTexture
+	//{
+	//public:
+	//private:
+	//};
 
 
 	//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
@@ -67,20 +114,95 @@ namespace Engine::Graphic {
 
 		virtual HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height) = 0;
 		virtual HRESULT CreateFormScreen() = 0;
+
+		virtual void* GetView()const = 0;
 	};
 
 	class DirectX11RenderTarget
-		: public iRenderTarget
-		, public DirectX11Texture
+		: public DirectX11Texture 
+		, public iRenderTarget
 	{
+	public:
+		DirectX11RenderTarget();
+		~DirectX11RenderTarget();
+
+		void Clear()override;
+		void Clear(const Engine::Math::fVec4& color)override;
+
+		HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height)override;
+		HRESULT CreateFormScreen()override;
+		inline void* GetView()const override { return m_pRTV; };
+
+		inline void* GetResource()const override { return m_pSRV.get(); };
+		inline HRESULT Create(const char* fileName) { return DirectX11Texture::Create(fileName); }
+		inline HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) { return DirectX11Texture::Create(format, width, height, pData); }
+
+	protected:
+		virtual HRESULT CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData = nullptr);
+
+	private:
+		ID3D11RenderTargetView* m_pRTV;
 	};
 
-	class DirectX12RenderTarget
-		: public iRenderTarget
-		, public DirectX12Texture
+	//class DirectX12RenderTarget
+	//	: public iRenderTarget
+	//	, public DirectX12Texture
+	//{
+	//public:
+	//	DirectX12RenderTarget();
+	//	~DirectX12RenderTarget();
+	//
+	//	void Clear()override;
+	//	void Clear(const Engine::Math::fVec4& color)override;
+	//
+	//	HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height)override;
+	//	HRESULT CreateFormScreen()override;
+	//
+	//private:
+	//
+	//};
+
+
+
+	//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
+	//																	//
+	//							DepthStencil							//
+	//																	//
+	//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
+	class iDepstStencil
+		: virtual public iTexture
 	{
+	public:
+		iDepstStencil() = default;
+		virtual ~iDepstStencil() = default;
+
+		virtual void Clear() = 0;
+		virtual HRESULT Create(uint16 width, uint16 height, bool useStencil) = 0;
+		virtual void* GetView()const = 0;
 	};
 
+	class DirectX11DepstStencil
+		: public DirectX11Texture
+		, public iDepstStencil
+	{
+	public:
+		DirectX11DepstStencil();
+		~DirectX11DepstStencil();
+
+		void Clear() override;
+		HRESULT Create(uint16 width, uint16 height, bool useStencil) override;
+		inline void* GetView()const override { return m_pDSV; }
+
+		void* GetResource()const override { return m_pSRV.get(); };
+		inline HRESULT Create(const char* fileName) { return DirectX11Texture::Create(fileName); }
+		inline HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) { return DirectX11Texture::Create(format, width, height, pData); }
+
+	protected:
+		virtual HRESULT CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData = nullptr);
+
+	private:
+		ID3D11DepthStencilView* m_pDSV;
+	};
 
 
 	//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
@@ -92,7 +214,10 @@ namespace Engine::Graphic {
 	class iTextureFactory
 	{
 	public:
-		virtual iTexture* Create() = 0;
+		virtual SRVData* CreateSRV(const std::string& path) = 0;
+		virtual iRenderTarget* CreateRenderTarget() = 0;
+		virtual iDepstStencil* CreateDepstStencil() = 0;
+
 		virtual ~iTextureFactory() = default;
 	};
 
@@ -100,21 +225,31 @@ namespace Engine::Graphic {
 		: public iTextureFactory
 	{
 	public:
-		inline iTexture* Create() override
+		SRVData* CreateSRV(const std::string& path) override;
+		inline iRenderTarget* CreateRenderTarget()
 		{
-			return new DirectX11Texture();
+			return New(DirectX11RenderTarget());
+		}
+		inline iDepstStencil* CreateDepstStencil()
+		{
+			return New(DirectX11DepstStencil());
 		}
 	};
 
-	class DirectX12TextureFactory 
-		: public iTextureFactory
-	{
-	public:
-		inline iTexture* Create() override
-		{
-			return new DirectX12Texture();
-		}
-	};
+	//class DirectX12TextureFactory 
+	//	: public iTextureFactory
+	//{
+	//public:
+	//	inline iTexture* CreateTexture() override
+	//	{
+	//		return New(DirectX12Texture());
+	//	}
+	//	inline iRenderTarget* CreateRenderTarget()
+	//	{
+	//		return New(DirectX12RenderTarget());
+	//	}
+	//};
+
 
 
 	//__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__///
@@ -128,12 +263,20 @@ namespace Engine::Graphic {
 		friend class System::Singleton<TextureManager>;
 	public:
 		void SetFactory(iTextureFactory* Factory);
-		iTexture* LoadTexture(const std::string& Path);
+		std::shared_ptr<SRVData> LoadTexture(const std::string& Path);
+		std::shared_ptr<iRenderTarget> RecordRenderTarget(const std::string& RecordName);
+		std::shared_ptr<iDepstStencil> RecordDepstStencil(const std::string& RecordName);
 
 	private:
+		TextureManager();
 		~TextureManager();
 
-		std::unordered_map<std::string, iTexture*> m_textures;
+		std::unordered_map<std::string, std::weak_ptr<SRVData>> m_textures;
+		std::unordered_map<std::string, std::weak_ptr<iRenderTarget>> m_RenderTargets;
+		std::unordered_map<std::string, std::weak_ptr<iDepstStencil>> m_DepstStencils;
+		std::shared_ptr<iRenderTarget> m_defaultRTV;
+		std::shared_ptr<iDepstStencil> m_defaultDSV;
+
 		iTextureFactory* m_factory;
 	};
 }

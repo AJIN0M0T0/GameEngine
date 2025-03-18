@@ -10,8 +10,7 @@
 
 // =-=-= インクルード部 =-=-=
 
-namespace Engine {
-	namespace Graphic {
+namespace Engine::Graphic {
 		class iCommandQueue
 		{
 		public:
@@ -37,7 +36,6 @@ namespace Engine {
 		private:
 			std::unique_ptr<ID3D12CommandQueue> m_CommandQueue;
 		};
-	}
 }
 
 #endif // !_____CommandQueue_HXX_____

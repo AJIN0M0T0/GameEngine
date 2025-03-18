@@ -22,8 +22,11 @@ namespace Engine::System {
 		friend class Singleton<SceneManager>;
 		friend class iObject;
 	public_Func
+		/// @brief シーンの更新処理
 		void Update();
 	
+		/// @brief ルートシーンのロード開始
+		/// @tparam SceneObject iSceneを継承したクラス
 		template<typename SceneObject, typename = std::enable_if_t<std::is_base_of_v<iScene, SceneObject>>>
 		inline void StartLoading()
 		{
@@ -38,14 +41,14 @@ namespace Engine::System {
 			ThreadPool::GetInstance().AddPool([this]() {m_NextScene->Loading(&m_pInstantChange); });
 		}
 
+		/// @brief ルートシーンの変更
 		template<typename SceneObject, typename = std::enable_if_t<std::is_base_of_v<iScene, SceneObject>>>
 		inline void ChangeScene()
 		{
 			// 既にロード済みか調べる
 			for (int i = 0; i < m_LoadScenes.size(); i++) {
 				if (typeid(SceneObject) == typeid(m_LoadScenes[i].get())) {
-					if (m_LoadScenes[i]->m_LoadComplete);
-					{
+					if (m_LoadScenes[i]->m_LoadComplete){
 						m_NextScene.swap(m_LoadScenes[i]);
 						m_LoadScenes.erase(m_LoadScenes.begin() + i);
 						return;
@@ -62,6 +65,7 @@ namespace Engine::System {
 			//ThreadPool::GetInstance().AddPool([this]() {m_pInstantChange->Loading(&m_pInstantChange); });
 		}
 
+		/// @brief ルートシーンの変更 ※非推奨
 		inline void ChangeScene(iScene* pScene)
 		{
 			for (int i = 0; i < m_LoadScenes.size(); i++) {
@@ -73,6 +77,8 @@ namespace Engine::System {
 			}
 		}
 
+		/// @brief 現在のルートシーンを取得
+		/// @return 現在のルートシーン
 		inline iScene* GetNowScene() const { return m_NowScene.get(); }
 
 	private_Func

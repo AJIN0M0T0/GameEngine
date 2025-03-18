@@ -15,67 +15,85 @@
 #include "Device.hxx"
 #include "SwapChain.hxx"
 #include "CommandQueue.hxx"
+#include "Texture.hxx"
 
-namespace Engine {
-	namespace Graphic {
-		class iGraphicsAPI
-		{
-		public:
-			virtual ~iGraphicsAPI() = default;
+#ifdef SHIPPING
+#include <Windows.h>
+#endif // SHIPPING
 
-			virtual void Initialize(HWND hWnd, int16 width, int16 height) = 0;
-			virtual void RenderFrame() = 0;
-			virtual void Cleanup() = 0;
+namespace Engine::Graphic {
+	class iGraphicsAPI
+	{
+	public:
+		virtual ~iGraphicsAPI() = default;
 
-			virtual iDevice* GetiDevice() = 0;
-		};
+		virtual void Initialize(HWND hWnd, uint16 width, uint16 height) = 0;
+		virtual void RenderFrame() = 0;
+		virtual void Cleanup() = 0;
 
-		class GraphicsDirectX11
-			:public iGraphicsAPI
-		{
-		public:
-			void Initialize(HWND hWnd, int16 width, int16 height) override;
-			void RenderFrame() override;
-			void Cleanup() override;
+		virtual iDevice* GetiDevice() = 0;
+		virtual iSwapChain* GetiSwapChain() = 0;
+		virtual iTextureFactory* GetiTextureFactory() = 0;
 
-			inline iDevice* GetiDevice() override { return &m_Device; }
-		private:
-			DirectX11Device m_Device;
-			DirectX11SwapChain m_SwapChain;
-			DirectX11CommandQueue m_CommandQueue;
-		};
+		virtual void SetRenderTarget(uint16 num, iRenderTarget** ppViews, iDepstStencil* pView) = 0;
+	};
 
-		class DirectX12Graphics
-			:public iGraphicsAPI
-		{
-		public:
-			void Initialize(HWND hWnd, int16 width, int16 height) override;
-			void RenderFrame() override;
-			void Cleanup() override;
+	class GraphicsDirectX11
+		:public iGraphicsAPI
+	{
+	public:
+		void Initialize(HWND hWnd, uint16 width, uint16 height) override;
+		void RenderFrame() override;
+		void Cleanup() override;
 
-			inline iDevice* GetiDevice() override { return &m_Device; }
-		private:
-			DirectX12Device m_Device;
-			DirectX12SwapChain m_SwapChain;
-			DirectX12CommandQueue m_CommandQueue;
-		};
+		inline iDevice* GetiDevice()override { return &m_Device; }
+		inline iSwapChain* GetiSwapChain()override { return &m_SwapChain; }
+		inline iTextureFactory* GetiTextureFactory()override { return
+#ifdef DIRECTX11_PRJ
+			New(DirectX11TextureFactory)
+#else
+			New(DirectX12TextureFactory)
+#endif // DIRECTX11_PRJ
+		; }
+
+		void SetRenderTarget(uint16 num, iRenderTarget** ppViews, iDepstStencil* pView)override;
+	private:
+		DirectX11Device m_Device;
+		DirectX11SwapChain m_SwapChain;
+		DirectX11CommandQueue m_CommandQueue;
+	};
+
+	//class DirectX12Graphics
+	//	:public iGraphicsAPI
+	//{
+	//public:
+	//	void Initialize(HWND hWnd, int16 width, int16 height) override;
+	//	void RenderFrame() override;
+	//	void Cleanup() override;
+
+	//	inline iDevice* GetiDevice() override { return &m_Device; }
+	//private:
+	//	DirectX12Device m_Device;
+	//	DirectX12SwapChain m_SwapChain;
+	//	DirectX12CommandQueue m_CommandQueue;
+	//};
 
 
-		class GraphicsFactory final
-			: public System::Singleton<GraphicsFactory>
-		{
-			friend class System::Singleton<GraphicsFactory>;
-		public:
-			GraphicsFactory& CreateGraphicsAPI();
-			inline iGraphicsAPI* operator->() { return m_GraphicsAPI.get(); }
-			inline iGraphicsAPI* get() { return m_GraphicsAPI.get(); }
-		private:
-			GraphicsFactory() {};
-			~GraphicsFactory() {};
+	class GraphicsFactory final
+		: public System::Singleton<GraphicsFactory>
+	{
+		friend class System::Singleton<GraphicsFactory>;
+	public:
+		GraphicsFactory& CreateGraphicsAPI();
+		inline iGraphicsAPI* operator->() { return m_GraphicsAPI.get(); }
+		inline iGraphicsAPI* get() { return m_GraphicsAPI.get(); }
+	private:
+		GraphicsFactory() {};
+		~GraphicsFactory() {};
 
-			std::unique_ptr<iGraphicsAPI> m_GraphicsAPI; 
-		};
-	}
+		std::unique_ptr<iGraphicsAPI> m_GraphicsAPI; 
+	};
 }
+
 
 #endif // !_____Direct3D_HXX_____

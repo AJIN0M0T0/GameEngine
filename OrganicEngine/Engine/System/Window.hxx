@@ -17,12 +17,14 @@ namespace Engine {
 		:public System::Singleton<Window>
 	{
 		friend class System::Singleton<Window>;
+		using WIDTH = uint16;
+		using HEIGHT = uint16;
 	public:
 		void SettingWindow(HINSTANCE hInstance, int nCmdShow);
 		void ShowWindow();
 
 		inline MSG GetMSG() { return m_message; }
-		inline std::pair<UINT, UINT> GetScreenSize() { return std::make_pair(SCREEN_WIDTH, SCREEN_HEIGHT); }
+		inline std::pair<WIDTH, HEIGHT> GetScreenSize() { return std::make_pair(SCREEN_WIDTH, SCREEN_HEIGHT); }
 		inline HWND GetHWND() { return m_hWnd; }
 		inline bool IsFullScreen() { return m_bFullScreen; }
 
@@ -44,7 +46,6 @@ namespace Engine {
 
 		bool m_bFullScreen;
 	};
-
 };
 
 #endif // !_____Window_HXX_____

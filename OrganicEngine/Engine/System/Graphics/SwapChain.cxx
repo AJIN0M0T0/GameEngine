@@ -31,12 +31,12 @@ void DirectX11SwapChain::Create()
 	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		// バックバッファの交換方法
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	factory->CreateSwapChainForHwnd(
-		static_cast<DirectX11Device*>(GraphicsFactory::GetInstance()->GetiDevice())->GetDevice()
+	HResultCheck( factory->CreateSwapChainForHwnd(
+		static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())
 		, Window::GetInstance().GetHWND()
 		, &sd
 		, nullptr, nullptr
-		, &m_swapChain);
+		, &m_swapChain));
 }
 
 void DirectX11SwapChain::Present()

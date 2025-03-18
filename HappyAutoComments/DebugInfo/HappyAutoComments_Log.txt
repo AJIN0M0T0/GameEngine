@@ -6,3 +6,7 @@
 2025/02/25 16:28:34: [Log] Detected Other Comment. 
 2025/02/25 16:28:34: [Log] Detected Code Element. 
 2025/02/25 16:28:34: [Log] Exec default-case(ElementTypeName : vsCMElementNamespace) 
+2025/03/16 11:42:41: [Log] Detected "Completion Comment" Input. 
+2025/03/16 11:42:41: [Log] Detected Other Comment. 
+2025/03/16 11:42:41: [Log] Detected Code Element. 
+2025/03/16 11:42:41: [Log] Detected Any Format. 

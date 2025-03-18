@@ -14,8 +14,7 @@
 struct IDXGISwapChain1;
 struct IDXGISwapChain4;
 
-namespace Engine {
-	namespace Graphic {
+namespace Engine::Graphic {
 		class iSwapChain
 		{
 		public:
@@ -23,6 +22,8 @@ namespace Engine {
 
 			virtual void Create() = 0;
 			virtual void Present() = 0;
+
+			virtual void* GetSwapChain() = 0;
 		};
 
 		
@@ -32,6 +33,8 @@ namespace Engine {
 		public:
 			void Create() override;
 			void Present() override;
+
+			inline void* GetSwapChain() override { return m_swapChain; }
 		private:
 			IDXGISwapChain1* m_swapChain;
 		};
@@ -47,6 +50,5 @@ namespace Engine {
 			std::unique_ptr<IDXGISwapChain4> m_SwapChain;
 		};
 	}
-}
 
 #endif // !_____SwapChain_HXX_____

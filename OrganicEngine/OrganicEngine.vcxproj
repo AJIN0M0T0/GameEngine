@@ -70,6 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(MSBuildProjectDirectory)\Resource\DirectXTex\x64\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>$(MSBuildProjectDirectory)\Resource\DirectXTex\x64\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -209,10 +215,12 @@
     <ClCompile Include="Object\GameObject.cxx" />
     <ClCompile Include="Object\Object.cxx" />
     <ClCompile Include="Object\SceneBase.cxx" />
+    <ClCompile Include="Object\SceneObject\testScene.cxx" />
     <ClInclude Include="Component\Component.hxx" />
     <ClInclude Include="Engine\Math\MathDef.hxx" />
     <ClInclude Include="Engine\Math\Transform.hxx" />
     <ClInclude Include="Engine\System\Graphics\CommandQueue.hxx" />
+    <ClInclude Include="Engine\System\Graphics\GraphicDef.hxx" />
     <ClInclude Include="Engine\System\Graphics\Shader.hxx" />
     <ClInclude Include="Engine\System\Graphics\SwapChain.hxx" />
     <ClInclude Include="Engine\System\SceneManager.hxx" />
@@ -224,6 +232,7 @@
     <ClInclude Include="Object\GameObject.hxx" />
     <ClInclude Include="Object\Object.hxx" />
     <ClInclude Include="Object\SceneBase.hxx" />
+    <ClInclude Include="Object\SceneObject\testScene.hxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Defines.hxx" />
@@ -241,6 +250,7 @@
     <ClInclude Include="Engine\System\Window.hxx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Shader\defines.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

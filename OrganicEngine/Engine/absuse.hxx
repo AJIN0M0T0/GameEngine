@@ -15,5 +15,6 @@
 #include "Debugger.hxx"
 #include "System/Allocator.hxx"
 #include "Math/MathDef.hxx"
+#include "System/Graphics/GraphicDef.hxx"
 
 #endif // !_____ABSUSE_HXX_____

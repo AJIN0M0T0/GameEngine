@@ -45,8 +45,9 @@ bool DirectX11Device::Initialize()
 	SIZE_T bestVideoMemory = 0;
 	for (UINT i = 0; pFactory->EnumAdapters(i, &pAdapter) != DXGI_ERROR_NOT_FOUND; ++i) {
 		DXGI_ADAPTER_DESC desc;
-		pAdapter->GetDesc(&desc);
-
+		desc.DedicatedVideoMemory = 0;
+		if (FAILED(pAdapter->GetDesc(&desc)))
+			break;
 		// ビデオメモリ量で最も優れたアダプターを選択
 		if (desc.DedicatedVideoMemory > bestVideoMemory) {
 			bestVideoMemory = desc.DedicatedVideoMemory;
@@ -59,26 +60,55 @@ bool DirectX11Device::Initialize()
 	}
 
 	pFactory->Release();
+	NullptrCheck(pBestAdapter);
 
-	for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; ++driverTypeIndex)
-	{
-		driverType = driverTypes[driverTypeIndex];
+	//for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; ++driverTypeIndex)
+	//{
+	//	driverType = driverTypes[driverTypeIndex];
+	//	hr = D3D11CreateDevice(
+	//		pBestAdapter
+	//		, D3D_DRIVER_TYPE_HARDWARE
+	//		, nullptr
+	//		, 0
+	//		, featureLevels
+	//		, numFeatureLevels
+	//		, D3D11_SDK_VERSION
+	//		, &m_Device
+	//		, &featureLevel
+	//		, &m_DeviceContext
+	//	);
+	//	if (SUCCEEDED(hr)){
+	//		break;
+	//	}
+	//}
+	if (pBestAdapter) {
+		driverType = D3D_DRIVER_TYPE_HARDWARE; // アダプターを指定するなら HARDWARE のみ
 		hr = D3D11CreateDevice(
-			pBestAdapter
-			, driverType
-			, nullptr
-			, 0
-			, featureLevels
-			, numFeatureLevels
-			, D3D11_SDK_VERSION
-			, &m_Device
-			, &featureLevel
-			, &m_DeviceContext
+			pBestAdapter, driverType, nullptr, 0,
+			featureLevels, numFeatureLevels,
+			D3D11_SDK_VERSION, &m_Device,
+			&featureLevel, &m_DeviceContext
 		);
-		if (SUCCEEDED(hr)){
-			break;
+	}
+	if (FAILED(hr)) {
+		// ソフトウェアレンダリングを試す
+		for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; ++driverTypeIndex) {
+			driverType = driverTypes[driverTypeIndex];
+			hr = D3D11CreateDevice(
+				nullptr, driverType, nullptr, 0,
+				featureLevels, numFeatureLevels,
+				D3D11_SDK_VERSION, &m_Device,
+				&featureLevel, &m_DeviceContext
+			);
+			if (SUCCEEDED(hr)) {
+				break;
+			}
 		}
 	}
+
+
+
+
 	if (FAILED(hr)) {
 		//std::cerr << "Failed to create D3D11 Device" << std::endl;
 		return false;

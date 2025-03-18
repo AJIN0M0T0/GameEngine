@@ -13,9 +13,18 @@
 namespace Engine {
 	namespace Time
 	{
+		/// @brief タイマーの初期化
 		void TimerInit();
+
+		/// @brief フレーム間の時間を取得
+		/// @return フレーム間の時間(秒)
 		float DeltaSeconds();
+
+		/// @brief FPSを取得
+		/// @return FPS
 		float GetFPS();
+
+		/// @brief タイマーのアップデート
 		void TimerUpdate();
 	}
 }
