@@ -28,7 +28,7 @@ public_Func
 	/// @return 所属ゲームオブジェクト
 	iObject* GetGameObject();
 
-private_Var
+protected_Var
 	iObject* m_pObject;
 };
 

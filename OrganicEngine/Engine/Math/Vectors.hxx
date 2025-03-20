@@ -13,10 +13,13 @@
 #include "MathDef.hxx"
 #include <string>
 
+#ifdef _DIRECTXs_PRJ
+#include <DirectXMath.h>
+#endif // _DIRECTXs_PRJ
+
 namespace Engine::Math
 {
 #ifdef _DIRECTXs_PRJ
-#include <DirectXMath.h>
 	using fVec4x4 = DirectX::XMFLOAT4X4;
 	using Matrix = DirectX::XMMATRIX;
 #endif // _DIRECTXs_PRJ

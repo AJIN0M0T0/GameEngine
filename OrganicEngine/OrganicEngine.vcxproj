@@ -72,9 +72,18 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>$(MSBuildProjectDirectory)\Resource\DirectXTex\x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(MSBuildProjectDirectory)\Resource;$(IncludePath)</IncludePath>
+    <MultiProcFXC>true</MultiProcFXC>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(MSBuildProjectDirectory)\Resource\DirectXTex\x64\Release;$(LibraryPath)</LibraryPath>
+    <MultiProcFXC>true</MultiProcFXC>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <MultiProcFXC>true</MultiProcFXC>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <MultiProcFXC>true</MultiProcFXC>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -100,6 +109,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>$(ProjectDir)\Assets\Shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -127,6 +140,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>$(ProjectDir)\Assets\Shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -155,6 +172,10 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(bullet3_bin)\BulletCollision_vs2010_x64_debug.lib;$(bullet3_bin)\BulletDynamics_vs2010_x64_debug.lib;$(bullet3_bin)\LinearMath_vs2010_x64_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>$(ProjectDir)\Assets\Shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -185,9 +206,16 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(bullet3_bin)\BulletCollision_vs2010_x64_release.lib;$(bullet3_bin)\BulletDynamics_vs2010_x64_release.lib;$(bullet3_bin)\LinearMath_vs2010_x64_release.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>$(ProjectDir)\Assets\Shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component\CameraBase.cpp" />
+    <ClCompile Include="Component\CameraDebug.cpp" />
     <ClCompile Include="Component\Component.cxx" />
+    <ClCompile Include="Component\ModelRenderer.cxx" />
     <ClCompile Include="Engine\main.cxx">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -204,9 +232,13 @@
     <ClCompile Include="Engine\Math\Easing.cxx" />
     <ClCompile Include="Engine\Math\Transform.cxx" />
     <ClCompile Include="Engine\Math\Vectors.cxx" />
+    <ClCompile Include="Engine\System\CameraManager.cpp" />
     <ClCompile Include="Engine\System\Graphics\CommandQueue.cxx" />
+    <ClCompile Include="Engine\System\Graphics\MeshBuffer.cxx" />
+    <ClCompile Include="Engine\System\Graphics\Model.cxx" />
     <ClCompile Include="Engine\System\Graphics\Shader.cxx" />
     <ClCompile Include="Engine\System\Graphics\SwapChain.cxx" />
+    <ClCompile Include="Engine\System\InputDeviceManager.cpp" />
     <ClCompile Include="Engine\System\SceneManager.cxx" />
     <ClCompile Include="Engine\System\Supervision.cxx" />
     <ClCompile Include="Engine\System\Allocator.cxx" />
@@ -216,13 +248,20 @@
     <ClCompile Include="Object\Object.cxx" />
     <ClCompile Include="Object\SceneBase.cxx" />
     <ClCompile Include="Object\SceneObject\testScene.cxx" />
+    <ClInclude Include="Component\CameraBase.h" />
+    <ClInclude Include="Component\CameraDebug.h" />
     <ClInclude Include="Component\Component.hxx" />
+    <ClInclude Include="Component\ModelRenderer.hxx" />
     <ClInclude Include="Engine\Math\MathDef.hxx" />
     <ClInclude Include="Engine\Math\Transform.hxx" />
+    <ClInclude Include="Engine\System\CameraManager.h" />
     <ClInclude Include="Engine\System\Graphics\CommandQueue.hxx" />
     <ClInclude Include="Engine\System\Graphics\GraphicDef.hxx" />
+    <ClInclude Include="Engine\System\Graphics\MeshBuffer.hxx" />
+    <ClInclude Include="Engine\System\Graphics\Model.hxx" />
     <ClInclude Include="Engine\System\Graphics\Shader.hxx" />
     <ClInclude Include="Engine\System\Graphics\SwapChain.hxx" />
+    <ClInclude Include="Engine\System\InputDeviceManager.h" />
     <ClInclude Include="Engine\System\SceneManager.hxx" />
     <ClInclude Include="Engine\System\Supervision.hxx" />
     <ClCompile Include="Engine\System\Graphics\Texture.cxx" />
@@ -252,6 +291,20 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="Shader\defines.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\Pixel\PixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shader\Vertex\VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

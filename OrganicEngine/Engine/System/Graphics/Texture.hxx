@@ -10,15 +10,12 @@
 
 // =-=-= インクルード部 =-=-=
 #include "../Singleton.hxx"
+#include "../../Math/Vectors.hxx"
 #include <unordered_map>
 
 #ifdef SHIPPING
 #include <Windows.h>
 #endif // SHIPPING
-
-namespace Engine::Math {
-	struct fVec4;
-}
 
 enum DXGI_FORMAT;
 struct ID3D11ShaderResourceView;
@@ -33,8 +30,25 @@ struct D3D12_TEXTURE2D_DESC;
 struct ID3D12RenderTargetView;
 struct ID3D12DepthStencilView;
 
+union convShaderResourceView {
+	ID3D11ShaderResourceView* p11SRV;
+	ID3D12ShaderResourceView* p12SRV;
+};
+
+union convRenderTargetView {
+	ID3D11RenderTargetView* p11RTV;
+	ID3D12RenderTargetView* p12RTV;
+};
+
+union convDepthStencilView {
+	ID3D11DepthStencilView* p11DSV;
+	ID3D12DepthStencilView* p12DSV;
+};
+
 namespace Engine::Graphic {
-	class GraphicsFactory;
+	class GraphicsManager;
+
+	using SRV_data = std::pair<convShaderResourceView, Math::nVec2>;
 
 	class iTexture
 	{
@@ -47,25 +61,11 @@ namespace Engine::Graphic {
 
 		virtual HRESULT Create(const char* fileName) = 0;
 		virtual HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) = 0;
-		virtual void* GetResource()const = 0;
+		virtual convShaderResourceView GetResource()const = 0;
 
 	protected:
 		uint16 m_width;
 		uint16 m_height;
-	};
-
-	struct SRVData
-	{
-		struct SRVs{
-			union {
-				ID3D11ShaderResourceView* p11SRV;
-				ID3D12ShaderResourceView* p12SRV;
-				};
-			inline explicit operator ID3D11ShaderResourceView* () { return p11SRV; }
-			inline explicit operator ID3D12ShaderResourceView* () { return p12SRV; }
-		} pSRV;
-		uint16 width;
-		uint16 height;
 	};
 
 	class DirectX11Texture 
@@ -77,14 +77,14 @@ namespace Engine::Graphic {
 
 		HRESULT Create(const char* fileName) override;
 		HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) override;
-		inline void* GetResource()const override { return m_pSRV.get()->pSRV.p11SRV; };
+		inline convShaderResourceView GetResource()const override { return m_pSRV.get()->first; };
 
 	protected:
 		D3D11_TEXTURE2D_DESC MakeTexDesc(DXGI_FORMAT format, uint16 width, uint16 height);
 		virtual HRESULT CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData);
 
 	protected:
-		std::shared_ptr<SRVData> m_pSRV;
+		std::shared_ptr<SRV_data> m_pSRV;
 		ID3D11Texture2D* m_pTex;
 	};
 
@@ -115,7 +115,7 @@ namespace Engine::Graphic {
 		virtual HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height) = 0;
 		virtual HRESULT CreateFormScreen() = 0;
 
-		virtual void* GetView()const = 0;
+		virtual convRenderTargetView GetView()const = 0;
 	};
 
 	class DirectX11RenderTarget
@@ -131,9 +131,9 @@ namespace Engine::Graphic {
 
 		HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height)override;
 		HRESULT CreateFormScreen()override;
-		inline void* GetView()const override { return m_pRTV; };
+		inline convRenderTargetView GetView()const override { return { m_pRTV }; }
 
-		inline void* GetResource()const override { return m_pSRV.get(); };
+		inline convShaderResourceView GetResource()const override { return m_pSRV.get()->first; };
 		inline HRESULT Create(const char* fileName) { return DirectX11Texture::Create(fileName); }
 		inline HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) { return DirectX11Texture::Create(format, width, height, pData); }
 
@@ -178,7 +178,7 @@ namespace Engine::Graphic {
 
 		virtual void Clear() = 0;
 		virtual HRESULT Create(uint16 width, uint16 height, bool useStencil) = 0;
-		virtual void* GetView()const = 0;
+		virtual convDepthStencilView GetView()const = 0;
 	};
 
 	class DirectX11DepstStencil
@@ -191,9 +191,9 @@ namespace Engine::Graphic {
 
 		void Clear() override;
 		HRESULT Create(uint16 width, uint16 height, bool useStencil) override;
-		inline void* GetView()const override { return m_pDSV; }
+		inline convDepthStencilView GetView()const override { return { m_pDSV }; }
 
-		void* GetResource()const override { return m_pSRV.get(); };
+		convShaderResourceView GetResource()const override { return m_pSRV.get()->first; };
 		inline HRESULT Create(const char* fileName) { return DirectX11Texture::Create(fileName); }
 		inline HRESULT Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData = nullptr) { return DirectX11Texture::Create(format, width, height, pData); }
 
@@ -214,7 +214,8 @@ namespace Engine::Graphic {
 	class iTextureFactory
 	{
 	public:
-		virtual SRVData* CreateSRV(const std::string& path) = 0;
+		virtual SRV_data* CreateSRV(const std::string& path) = 0;
+		virtual iTexture* CreateTexture() = 0;
 		virtual iRenderTarget* CreateRenderTarget() = 0;
 		virtual iDepstStencil* CreateDepstStencil() = 0;
 
@@ -225,12 +226,13 @@ namespace Engine::Graphic {
 		: public iTextureFactory
 	{
 	public:
-		SRVData* CreateSRV(const std::string& path) override;
-		inline iRenderTarget* CreateRenderTarget()
+		SRV_data* CreateSRV(const std::string& path) override;
+		iTexture* CreateTexture()override;
+		inline iRenderTarget* CreateRenderTarget() override
 		{
 			return New(DirectX11RenderTarget());
 		}
-		inline iDepstStencil* CreateDepstStencil()
+		inline iDepstStencil* CreateDepstStencil() override
 		{
 			return New(DirectX11DepstStencil());
 		}
@@ -263,7 +265,9 @@ namespace Engine::Graphic {
 		friend class System::Singleton<TextureManager>;
 	public:
 		void SetFactory(iTextureFactory* Factory);
-		std::shared_ptr<SRVData> LoadTexture(const std::string& Path);
+		std::shared_ptr<SRV_data> LoadTexture(const std::string& Path);
+		std::shared_ptr<iTexture> CreateTexture();
+		std::shared_ptr<iTexture> CreateTexture(const std::string& path);
 		std::shared_ptr<iRenderTarget> RecordRenderTarget(const std::string& RecordName);
 		std::shared_ptr<iDepstStencil> RecordDepstStencil(const std::string& RecordName);
 
@@ -271,7 +275,8 @@ namespace Engine::Graphic {
 		TextureManager();
 		~TextureManager();
 
-		std::unordered_map<std::string, std::weak_ptr<SRVData>> m_textures;
+		std::unordered_map<std::string, std::weak_ptr<SRV_data>> m_srv;
+		std::unordered_map<std::string, std::weak_ptr<iTexture>> m_Textures;
 		std::unordered_map<std::string, std::weak_ptr<iRenderTarget>> m_RenderTargets;
 		std::unordered_map<std::string, std::weak_ptr<iDepstStencil>> m_DepstStencils;
 		std::shared_ptr<iRenderTarget> m_defaultRTV;

@@ -43,3 +43,5 @@ void GameObject::Update() {
 		elem.get()->Update();
 	}
 }
+void GameObject::Draw(const Engine::Math::Matrix& world) {
+}

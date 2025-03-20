@@ -1,8 +1,7 @@
 #include "Object.hxx"
 
-#include "Object.hxx"
-
 #include "GameObject.hxx"
+#include "../Engine/System/SceneManager.hxx"
 
 iObject::iObject()
 	: m_pParent(nullptr)
@@ -80,4 +79,9 @@ void iObject::RemoveChild(iObject* pChild)
 			break;
 		}
 	}
+}
+
+void iObject::AddInitQueue(iObject* obj)
+{
+	Engine::System::SceneManager::GetInstance().m_InitQueue.push(obj);
 }

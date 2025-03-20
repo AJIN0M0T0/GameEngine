@@ -32,7 +32,7 @@ void DirectX11SwapChain::Create()
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	HResultCheck( factory->CreateSwapChainForHwnd(
-		static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())
+		GraphicsManager::GetInstance()->GetDevice().p11D
 		, Window::GetInstance().GetHWND()
 		, &sd
 		, nullptr, nullptr

@@ -4,29 +4,29 @@
 
 using namespace Engine::Graphic;
 
-void GraphicsDirectX11::Initialize(HWND hWnd, uint16 width, uint16 height)
+void DirectX11GraphicsFactory::Initialize(HWND hWnd, uint16 width, uint16 height)
 {
 	FalseCheck(m_Device.Initialize());
 
 	m_SwapChain.Create();
 }
 
-void GraphicsDirectX11::RenderFrame()
+void DirectX11GraphicsFactory::RenderFrame()
 {
 	m_SwapChain.Present();
 }
 
-void GraphicsDirectX11::Cleanup()
+void DirectX11GraphicsFactory::Cleanup()
 {
 }
 
-void GraphicsDirectX11::SetRenderTarget(uint16 num, iRenderTarget** ppViews, iDepstStencil* pView) {
+void DirectX11GraphicsFactory::SetRenderTarget(uint16 num, iRenderTarget** ppViews, iDepstStencil* pView) {
 	static ID3D11RenderTargetView* rtvs[4];
 
 	if (num > 4) num = 4;
 	for (UINT i = 0; i < num; ++i)
-		rtvs[i] = static_cast<ID3D11RenderTargetView*>(ppViews[i]->GetView());
-	static_cast<ID3D11DeviceContext*>(m_Device.GetDeviceContext())->OMSetRenderTargets(num, rtvs, pView ? static_cast<ID3D11DepthStencilView*>(pView->GetView()) : nullptr);
+		rtvs[i] = ppViews[i]->GetView().p11RTV;
+	GetDeviceContext().p11DC->OMSetRenderTargets(num, rtvs, pView ? pView->GetView().p11DSV : nullptr);
 
 	// ビューポートの設定
 	D3D11_VIEWPORT vp;
@@ -36,7 +36,7 @@ void GraphicsDirectX11::SetRenderTarget(uint16 num, iRenderTarget** ppViews, iDe
 	vp.Height = (float)ppViews[0]->GetHeight();
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
-	static_cast<ID3D11DeviceContext*>(m_Device.GetDeviceContext())->RSSetViewports(1, &vp);
+	GetDeviceContext().p11DC->RSSetViewports(1, &vp);
 }
 
 //void DirectX12Graphics::Initialize(HWND hWnd, int16 width, int16 height)
@@ -53,11 +53,11 @@ void GraphicsDirectX11::SetRenderTarget(uint16 num, iRenderTarget** ppViews, iDe
 //{
 //}
 
-GraphicsFactory& GraphicsFactory::CreateGraphicsAPI()
+GraphicsManager& GraphicsManager::CreateGraphicsAPI()
 {
 	if (m_GraphicsAPI) return *this;
 #ifdef DIRECTX11_PRJ
-	m_GraphicsAPI = std::make_unique<GraphicsDirectX11>();
+	m_GraphicsAPI = std::make_unique<DirectX11GraphicsFactory>();
 #elif defined(DIRECTX12_PRJ)
 	m_GraphicsAPI = std::make_unique<DirectX12Graphics>();
 #endif // DIRECTX11_PRJ

@@ -14,7 +14,7 @@
 
 namespace Engine::System {
 	class SceneManager;
-}
+};
 
 class iObject
 {
@@ -28,10 +28,10 @@ public_Func
 	/// @tparam  
 	/// @return 
 	template <typename TypeObject, typename = std::enable_if_t<std::is_base_of_v<iObject, TypeObject>>>
-	 TypeObject& thisCreateObject() {
-		 TypeObject* pObject = New(TypeObject());
+	TypeObject& thisCreateObject() {
+		 TypeObject* pObject = New(TypeObject);
 		this->AddChild(pObject);
-		Engine::System::SceneManager::GetInstance().m_InitQueue.push(pObject);
+		AddInitQueue(pObject);
 		return *pObject;
 	}
 
@@ -60,6 +60,9 @@ protected_Func
 	
 	void UpdateChildren();
 	void DrawChildren(const Engine::Math::Matrix& world);
+
+private_Func
+	void AddInitQueue(iObject* obj);
 
 private_Var
 	bool m_IsActive;

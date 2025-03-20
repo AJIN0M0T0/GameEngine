@@ -18,6 +18,16 @@ struct ID3D11DepthStencilState;
 struct ID3D11SamplerState;
 struct ID3D11BlendState;
 struct ID3D12Device;
+struct ID3D12DeviceContext;
+
+union convDevice {
+	ID3D11Device* p11D;
+	ID3D12Device* p12D;
+};
+union convDeviceContext {
+	ID3D11DeviceContext* p11DC;
+	ID3D12DeviceContext* p12DC;
+};
 
 namespace Engine::Graphic {
 	enum BlendMode
@@ -53,8 +63,8 @@ namespace Engine::Graphic {
 
 		virtual bool Initialize() = 0;
 		virtual void CreateRenderTarget() = 0;
-		virtual void* GetDevice()const = 0;
-		virtual void* GetDeviceContext()const = 0;
+		virtual convDevice GetDevice()const = 0;
+		virtual convDeviceContext GetDeviceContext()const = 0;
 	};
 
 	class DirectX11Device 
@@ -64,8 +74,8 @@ namespace Engine::Graphic {
 		bool Initialize() override;
 		void CreateRenderTarget() override;
 
-		inline void* GetDevice()const override { return m_Device; }
-		inline void* GetDeviceContext()const override { return m_DeviceContext; }
+		inline convDevice GetDevice()const override { return {m_Device };}
+		inline convDeviceContext GetDeviceContext()const override { return {m_DeviceContext }; }
 	private:
 		ID3D11Device* m_Device;
 		ID3D11DeviceContext* m_DeviceContext;
@@ -81,9 +91,11 @@ namespace Engine::Graphic {
 	public:
 		bool Initialize() override;
 		void CreateRenderTarget() override;
-		inline void* GetDevice()const override { return m_Device; };
+		inline convDevice GetDevice()const override { convDevice ret; ret.p12D = m_Device; return ret; }
+		inline convDeviceContext GetDeviceContext()const override { convDeviceContext ret; ret.p12DC = m_DeviceContext; return ret; }
 	private:
 		ID3D12Device* m_Device;
+		ID3D12DeviceContext* m_DeviceContext;
 	};
 }
 

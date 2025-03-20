@@ -11,6 +11,10 @@
 // =-=-= インクルード部 =-=-=
 #include "../SceneBase.hxx"
 
+namespace Engine::Graphic {
+	class Model;
+};
+
 class testScene
 	: public iScene
 {
@@ -23,7 +27,7 @@ public:
 	void Draw(const Engine::Math::Matrix& world)override;
 
 private:
-
+	Engine::Graphic::Model* m_pModel;
 };
 
 #endif // !_____testScene_HXX_____

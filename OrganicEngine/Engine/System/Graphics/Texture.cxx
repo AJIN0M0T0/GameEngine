@@ -1,14 +1,15 @@
 #include "Texture.hxx"
-#include <d3d11.h>
 #include "../../../Resource/DirectXTex/TextureLoad.h"
+#include <d3d11.h>
+#include <dxgi1_4.h>
+#include <DirectXMath.h>
 #include "GraphicsAPI.hxx"
-#include "../../Math/Vectors.hxx"
+//#include "../../Math/Vectors.hxx"
 #include "../Window.hxx"
 
 #pragma comment(lib, "d3d11.lib")
 
 using namespace Engine::Graphic;
-
 
 iTexture::iTexture()
 	: m_width(0)
@@ -29,8 +30,8 @@ DirectX11Texture::~DirectX11Texture()
 HRESULT DirectX11Texture::Create(const char* fileName)
 {
 	m_pSRV = TextureManager::GetInstance().LoadTexture(fileName);
-	m_width = m_pSRV->width;
-	m_height = m_pSRV->height;
+	m_width = m_pSRV.get()->second.x;
+	m_height = m_pSRV->second.y;
 	return MB_OK;
 }
 HRESULT DirectX11Texture::Create(DXGI_FORMAT format, uint16 width, uint16 height, const void* pData)
@@ -54,13 +55,13 @@ D3D11_TEXTURE2D_DESC DirectX11Texture::MakeTexDesc(DXGI_FORMAT format, uint16 wi
 HRESULT DirectX11Texture::CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData)
 {
 	HRESULT hr = E_FAIL;
-	m_pSRV.reset(new SRVData());
+	m_pSRV.reset(new SRV_data);
 
 	// テクスチャ作成
 	D3D11_SUBRESOURCE_DATA data = {};
 	data.pSysMem = pData;
 	data.SysMemPitch = desc.Width * 4;
-	hr = static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())
+	hr = GraphicsManager::GetInstance()->GetDevice().p11D
 		->CreateTexture2D(&desc, pData ? &data : nullptr, &m_pTex);
 	if (FAILED(hr)) { return hr; }
 
@@ -74,8 +75,8 @@ HRESULT DirectX11Texture::CreateResource(D3D11_TEXTURE2D_DESC& desc, const void*
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 	// 生成
-	hr = static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())
-		->CreateShaderResourceView(m_pTex, &srvDesc, &m_pSRV->pSRV.p11SRV);
+	hr = GraphicsManager::GetInstance()->GetDevice().p11D
+		->CreateShaderResourceView(m_pTex, &srvDesc, &m_pSRV->first.p11SRV);
 	if (SUCCEEDED(hr))
 	{
 		m_width = desc.Width;
@@ -102,7 +103,7 @@ void DirectX11RenderTarget::Clear()
 }
 void DirectX11RenderTarget::Clear(const Math::fVec4& Color)
 {
-	static_cast<ID3D11DeviceContext*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDeviceContext())->ClearRenderTargetView(m_pRTV, Color.v);
+	GraphicsManager::GetInstance()->GetDeviceContext().p11DC->ClearRenderTargetView(m_pRTV, Color.v);
 }
 HRESULT DirectX11RenderTarget::Create(DXGI_FORMAT format, uint16 width, uint16 height)
 {
@@ -116,7 +117,7 @@ HRESULT DirectX11RenderTarget::CreateFormScreen()
 
 	// バックバッファのポインタを取得
 	ID3D11Texture2D* pBackBuffer = NULL;
-	hr = static_cast<IDXGISwapChain*>(GraphicsFactory::GetInstance()->GetiSwapChain()->GetSwapChain())->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&m_pTex);
+	hr = GraphicsManager::GetInstance()->GetSwapChain().p11SC->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&m_pTex);
 	if (FAILED(hr)) { return hr; }
 
 	// バックバッファへのポインタを指定してレンダーターゲットビューを作成
@@ -124,7 +125,7 @@ HRESULT DirectX11RenderTarget::CreateFormScreen()
 	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.Texture2D.MipSlice = 0;
-	hr = static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())
+	hr = GraphicsManager::GetInstance()->GetDevice().p11D
 		->CreateRenderTargetView(m_pTex, &rtvDesc, &m_pRTV);
 	if (SUCCEEDED(hr))
 	{
@@ -147,7 +148,7 @@ HRESULT DirectX11RenderTarget::CreateResource(D3D11_TEXTURE2D_DESC& desc, const 
 	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 
 	// 生成
-	return static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())
+	return GraphicsManager::GetInstance()->GetDevice().p11D
 		->CreateRenderTargetView(m_pTex, &rtvDesc, &m_pRTV);
 }
 
@@ -164,7 +165,7 @@ DirectX11DepstStencil::~DirectX11DepstStencil()
 }
 void DirectX11DepstStencil::Clear()
 {
-	static_cast<ID3D11DeviceContext*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDeviceContext())
+	GraphicsManager::GetInstance()->GetDeviceContext().p11DC
 		->ClearDepthStencilView(m_pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 HRESULT DirectX11DepstStencil::Create(uint16 width, uint16 height, bool useStencil)
@@ -190,15 +191,15 @@ HRESULT DirectX11DepstStencil::CreateResource(D3D11_TEXTURE2D_DESC& desc, const 
 	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 
 	// 生成
-	return static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())->CreateDepthStencilView(m_pTex, &dsvDesc, &m_pDSV);
+	return GraphicsManager::GetInstance()->GetDevice().p11D->CreateDepthStencilView(m_pTex, &dsvDesc, &m_pDSV);
 }
 
 
 
-SRVData* DirectX11TextureFactory::CreateSRV(const std::string& path)
+SRV_data* DirectX11TextureFactory::CreateSRV(const std::string& path)
 {
 	HRESULT hr = S_OK;
-	SRVData* data = new SRVData;
+	SRV_data* data = New(SRV_data);
 
 	// 文字変換
 	wchar_t wPath[MAX_PATH];
@@ -217,16 +218,19 @@ SRVData* DirectX11TextureFactory::CreateSRV(const std::string& path)
 	}
 
 	// シェーダリソース生成
-	hr = CreateShaderResourceView(static_cast<ID3D11Device*>(GraphicsFactory::GetInstance()->GetiDevice()->GetDevice())
-		, image.GetImages(), image.GetImageCount(), mdata, &data->pSRV.p11SRV);
+	hr = CreateShaderResourceView(GraphicsManager::GetInstance()->GetDevice().p11D
+		, image.GetImages(), image.GetImageCount(), mdata, &data->first.p11SRV);
 	if (SUCCEEDED(hr))
 	{
-		data->width = (UINT)mdata.width;
-		data->height = (UINT)mdata.height;
+		data->second.x= (UINT)mdata.width;
+		data->second.y = (UINT)mdata.height;
 	}
 	return data;
 }
-
+iTexture* DirectX11TextureFactory::CreateTexture()
+{
+	return New(DirectX11Texture);
+}
 
 
 
@@ -234,12 +238,26 @@ void TextureManager::SetFactory(iTextureFactory* Factory)
 {
 	m_factory = Factory;
 }
-std::shared_ptr<SRVData> TextureManager::LoadTexture(const std::string& Path) {
-	if (m_textures.count(Path) && !m_textures[Path].expired()) {
-		return m_textures[Path].lock();
+std::shared_ptr<SRV_data> TextureManager::LoadTexture(const std::string& Path) {
+	if (m_srv.count(Path) && !m_srv[Path].expired()) {
+		return m_srv[Path].lock();
 	}
-	std::shared_ptr<SRVData> texture = std::shared_ptr<SRVData>(NullptrCheck(m_factory->CreateSRV(Path)));
-	m_textures[Path] = texture;
+	std::shared_ptr<SRV_data> texture
+		= std::shared_ptr<SRV_data>(NullptrCheck(m_factory->CreateSRV(Path)));
+	m_srv[Path] = texture;
+	return texture;
+}
+std::shared_ptr<iTexture> TextureManager::CreateTexture()
+{
+	return std::shared_ptr<iTexture>(NullptrCheck(m_factory->CreateTexture()));
+}
+std::shared_ptr<iTexture> TextureManager::CreateTexture(const std::string& Path)
+{
+	if (m_Textures.count(Path) && !m_Textures[Path].expired()) {
+		return m_Textures[Path].lock();
+	}
+	std::shared_ptr<iTexture> texture = std::shared_ptr<iTexture>(NullptrCheck(m_factory->CreateTexture()));
+	m_Textures[Path] = texture;
 	return texture;
 }
 std::shared_ptr<iRenderTarget> TextureManager::RecordRenderTarget(const std::string& RecordName)
@@ -263,7 +281,7 @@ std::shared_ptr<iDepstStencil> TextureManager::RecordDepstStencil(const std::str
 TextureManager::TextureManager()
 	: m_factory(nullptr)
 {
-	m_factory = Graphic::GraphicsFactory::GetInstance()->GetiTextureFactory();
+	m_factory = Graphic::GraphicsManager::GetInstance()->GetiTextureFactory();
 	m_defaultRTV = RecordRenderTarget("default");
 
 	Engine::Window& window = Engine::Window::GetInstance();

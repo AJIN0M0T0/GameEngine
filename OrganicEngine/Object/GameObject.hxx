@@ -29,7 +29,7 @@ public_Func
 	inline TypeComp* AddComponent()
 	{
 		std::unique_ptr<TypeComp> pComp(New(TypeComp));
-		pComp->m_pBaseObject = this;
+		pComp->m_pObject = this;
 		m_Components.push_back(std::move(pComp));
 		return static_cast<TypeComp*>(m_Components.back().get());
 	}
@@ -64,6 +64,9 @@ public_Func
 
 	virtual bool Init()override;
 	virtual void Update()override;
+	/// @brief 描画処理
+	/// @param Parentworld 自身のワールド座標
+	virtual void Draw(const Engine::Math::Matrix& world);
 
 private_Var
 	Name m_Name;						// オブジェクト名

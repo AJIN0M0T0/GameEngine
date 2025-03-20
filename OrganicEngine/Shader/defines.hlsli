@@ -1,7 +1,7 @@
-//	ƒtƒ@ƒCƒ‹–¼	Fdefines.hlsli
-//	  ŠT  —v		F\‘¢‘Ì‚Ì’è‹`
-//	ì	¬	Ò	Fdaigo
-//	 ì¬“ú	F2025/02/21 10:11:12
+//	ãƒ•ã‚¡ã‚¤ãƒ«å	ï¼šdefines.hlsli
+//	  æ¦‚  è¦		ï¼šæ§‹é€ ä½“ã®å®šç¾©
+//	ä½œ	æˆ	è€…	ï¼šdaigo
+//	 ä½œæˆæ—¥æ™‚	ï¼š2025/02/21 10:11:12
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
 struct WVP
@@ -13,12 +13,14 @@ struct WVP
 
 struct VS_IN_01
 {
-    float3 Pos : POSITION;
-    float4 Color : COLOR;
+    float3 pos : POSITION0;
+	float3 normal : NORMAL0;
+	float2 uv : TEXCOORD0;
 };
 
 struct PS_IN_01
 {
-    float4 Pos : SV_POSITION;
-    float4 Color : COLOR;
+    float4 pos : SV_POSITION0;
+    float2 uv : TEXCOORD0;
+	float3 normal : NORMAL0;
 };
