@@ -10,51 +10,50 @@
 
 #include "Vectors.hxx"
 
-namespace Engine::Math{
+namespace Engine::Math {
 
-class Transform
-{
-public:
-	Transform();
-	~Transform();
+	class Transform
+	{
+	public:
+		Transform();
+		~Transform();
 
-	void Update();
+		void Update();
 
-	Engine::Math::fVec3 GetLocalPosition();
-	Engine::Math::fVec3 GetLocalRotation();
-	Engine::Math::fVec3 GetLocalScale();
-	Engine::Math::fVec3 GetWorldPosition();
-	Engine::Math::fVec3 GetWorldRotation();
-	Engine::Math::fVec3 GetWorldScale();
+		fVec3 GetLocalPosition();
+		fVec3 GetLocalRotation();
+		fVec3 GetLocalScale();
+		fVec3 GetWorldPosition();
+		fVec3 GetWorldRotation();
+		fVec3 GetWorldScale();
 
-	void  SetLocalPosition(fVec3 Get);
-	void  SetLocalRotation(fVec3 Get);
-	void  SetLocalScale(fVec3 Get);
-	void  SetWorldPosition(fVec3 Get);
-	void  SetWorldRotation(fVec3 Get);
-	void  SetWorldScale(fVec3 Get);
+		void  SetLocalPosition(fVec3 Get);
+		void  SetLocalRotation(fVec3 Get);
+		void  SetLocalScale(fVec3 Get);
+		void  SetWorldPosition(fVec3 Get);
+		void  SetWorldRotation(fVec3 Get);
+		void  SetWorldScale(fVec3 Get);
 
-	void SetParent(Transform* tf);
-	void RemoveParent();
+		void SetParent(Transform* tf);
+		void RemoveParent();
 
-	void LookPoint(Transform* point);
+		void LookPoint(Transform* point);
 
-	Matrix GetWorldMatrix(void);
+		Matrix GetWorldMatrix(void);
 
-private:
-	void ChangeParent();
+	private:
+		void ChangeParent();
 
-private:
-	fVec3 m_Rotation;// ローカル座標の回転
-	fVec3 m_Scale;// ローカル座標の拡大縮小
-	fVec3 m_Position;// ローカル座標の位置
+	private:
+		fVec3 m_Rotation;// ローカル座標の回転
+		fVec3 m_Scale;// ローカル座標の拡大縮小
+		fVec3 m_Position;// ローカル座標の位置
 
-	bool m_IsLook;
-	Transform* m_LookPoint;
+		bool m_IsLook;
+		Transform* m_LookPoint;
 
-
-	Transform* m_Parent;
-};
+		Transform* m_Parent;
+	};
 
 	fVec3 PositionLocalToWorld(fVec3 localPos, Transform* pParentTransform);
 	fVec3 PositionWorldToLocal(fVec3 worldPos, Transform* pParentTransform);
@@ -65,7 +64,7 @@ private:
 	fVec3 VectorToRotation(fVec3 vec);
 	fVec3 RotationToVector(fVec3 rot);
 
-	Matrix GetWorldMatrix(const Matrix& baseWorld,Transform Local);
-};
+	Matrix GetWorldMatrix(const Matrix& baseWorld, Transform Local);
+}
 
 #endif // !_____Transform_HXX_____

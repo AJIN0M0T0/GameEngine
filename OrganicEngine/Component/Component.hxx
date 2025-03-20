@@ -16,7 +16,7 @@ class iComponent
 {
 	friend class GameObject;
 	friend class iScene;
-public_Func
+public:
 	iComponent() :m_pObject(nullptr) {};
 	virtual ~iComponent() = default;
 
@@ -28,7 +28,7 @@ public_Func
 	/// @return 所属ゲームオブジェクト
 	iObject* GetGameObject();
 
-protected_Var
+protected:
 	iObject* m_pObject;
 };
 

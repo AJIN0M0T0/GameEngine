@@ -34,6 +34,7 @@ bool Engine::System::Supervision::Initialize()
 	CameraManager::CreateInstance();
 
 	ThreadPool::CreateInstance();
+
 	SceneManager::CreateInstance();
 	SceneManager::GetInstance().ChangeScene<testScene>();
 

@@ -1,2 +1,1 @@
-# GameEngine
-My Group Game Engine
+# OrganicEngine
