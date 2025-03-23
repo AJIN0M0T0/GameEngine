@@ -214,6 +214,7 @@
   <ItemGroup>
     <ClCompile Include="Component\CameraBase.cpp" />
     <ClCompile Include="Component\CameraDebug.cpp" />
+    <ClCompile Include="Component\Collision.cxx" />
     <ClCompile Include="Component\Component.cxx" />
     <ClCompile Include="Component\ModelRenderer.cxx" />
     <ClCompile Include="Engine\main.cxx">
@@ -250,6 +251,7 @@
     <ClCompile Include="Object\SceneObject\testScene.cxx" />
     <ClInclude Include="Component\CameraBase.h" />
     <ClInclude Include="Component\CameraDebug.h" />
+    <ClInclude Include="Component\Collision.hxx" />
     <ClInclude Include="Component\Component.hxx" />
     <ClInclude Include="Component\ModelRenderer.hxx" />
     <ClInclude Include="Engine\Math\MathDef.hxx" />

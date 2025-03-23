@@ -102,6 +102,9 @@
     <ClCompile Include="Engine\System\InputDeviceManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Component\Collision.cxx">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Defines.hxx">
@@ -201,6 +204,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\System\InputDeviceManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collision.hxx">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
