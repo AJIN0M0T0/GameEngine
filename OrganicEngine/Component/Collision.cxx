@@ -5,6 +5,12 @@
 #include <list>
 #include <functional>
 #include <DirectXMath.h>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+
+std::vector<std::pair<btCollisionObject*, btCollisionObject*>> iCollision::m_collisionPairs;
 
 iCollision::iCollision()
 	: m_func(nullptr)
@@ -153,16 +159,24 @@ void iCollision::SetHitEvent(Name name, std::function<void()> func)
 }
 
 CubeCollision::CubeCollision()
+	: m_boxShape(nullptr)
+	, m_halfExtents(0.0f, 0.0f, 0.0f)
 {
 }
 
 CubeCollision::~CubeCollision()
 {
+	if (m_boxShape)
+	{
+		delete m_boxShape;
+		m_boxShape = nullptr;
+	}
 }
 
 bool CubeCollision::Init()
 {
-    return false;
+	m_boxShape = new btBoxShape(m_halfExtents);
+	return iCollision::Init();
 }
 
 void CubeCollision::Update()
@@ -177,16 +191,28 @@ btCollisionShape* CubeCollision::GetCollisionShape() const
 
 
 CapsuleCollision::CapsuleCollision()
+	: m_capsuleShape(nullptr)
+	, m_radius(0.0f)
+	, m_height(0.0f)
 {
 }
 
+
 CapsuleCollision::~CapsuleCollision()
 {
+	if (m_capsuleShape)
+	{
+		delete m_capsuleShape;
+		m_capsuleShape = nullptr;
+	}
 }
 
 bool CapsuleCollision::Init()
 {
-    return false;
+	m_capsuleShape = new btCapsuleShape(m_radius, m_height);
+
+
+	return iCollision::Init();
 }
 
 void CapsuleCollision::Update()
@@ -219,6 +245,57 @@ void MeshCollision::Update()
 btCollisionShape* MeshCollision::GetCollisionShape() const
 {
 	return m_meshShape;
+}
+
+bool MeshCollision::LoadModel(const std::string& path)
+{
+	Assimp::Importer importer;
+
+	const aiScene* scene = importer.ReadFile(
+		path,
+		aiProcess_Triangulate |
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_GenSmoothNormals |
+		aiProcess_FlipUVs
+	);
+
+	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	{
+		return false;
+	}
+
+	m_mesh = new btTriangleMesh();
+
+	// メッシュの読み込み
+	for (unsigned int meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex)
+	{
+		aiMesh* mesh = scene->mMeshes[meshIndex];
+
+		// モデルの三角形データをBulletの三角形メッシュに追加
+		for (unsigned int faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex)
+		{
+			aiFace& face = mesh->mFaces[faceIndex];
+
+			// Assimpの三角形化処理により、全ての面が3頂点になっている
+			if (face.mNumIndices == 3) 
+			{
+				btVector3 vertex[3];
+
+				for (unsigned int i = 0; i < 3; ++i)
+				{
+					aiVector3D pos = mesh->mVertices[face.mIndices[i]];
+					vertex[i] = btVector3(pos.x, pos.y, pos.z);
+				}
+
+				m_triangleMesh->addTriangle(vertex[0], vertex[1], vertex[2]);
+			}
+		}
+	}
+
+	bool useQuantizedAabbCompression = true;
+	m_meshShape = new btBvhTriangleMeshShape(m_triangleMesh, useQuantizedAabbCompression);
+
+	return true;
 }
 
 

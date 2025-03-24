@@ -16,6 +16,7 @@
 #include <map>
 #include <vector>
 #include <functional>
+#include <string>
 #include <btBulletDynamicsCommon.h>
 
 class iCollision
@@ -51,13 +52,13 @@ protected:
 	std::map<ID, std::function<void()>> m_hitEventID;
 	std::map<Tag, std::function<void()>> m_hitEventTag;
 	std::map<Name, std::function<void()>> m_hitEventName;
+	static std::vector<std::pair<btCollisionObject*, btCollisionObject*>> m_collisionPairs;
 
 private:
 	std::function<void()> m_func;
 
 
 
-	static std::vector<std::pair<btCollisionObject*, btCollisionObject*>> m_collisionPairs;
 
 };
 
@@ -71,6 +72,18 @@ public:
 	void Update() override;
 
 	btCollisionShape* GetCollisionShape() const override;
+
+	/**
+	 * @brief ボックスの半径を設定
+	 * @param[in] x  x軸方向の半径
+	 * @param[in] y  y軸方向の半径
+	 * @param[in] z  z軸方向の半径
+	 */
+	void SetHalfExtents(const float x, const float y, const float z)
+	{
+		m_halfExtents = btVector3(x, y, z);
+		m_boxShape = new btBoxShape(m_halfExtents);
+	}
 
 private:
 	btBoxShape* m_boxShape = nullptr;
@@ -87,6 +100,18 @@ public:
 	void Update() override;
 
 	btCollisionShape* GetCollisionShape() const override;
+
+	/**
+	 * @brief カプセルの半径と高さを設定
+	 * @param[in] radius  半径
+	 * @param[in] height  高さ
+	 */
+	void SetRadiusAndHeight(const float radius, const float height)
+	{
+		m_radius = radius;
+		m_height = height;
+		m_capsuleShape = new btCapsuleShape(m_radius, m_height);
+	}
 
 private:
 	btCapsuleShape* m_capsuleShape = nullptr;
@@ -105,9 +130,11 @@ public:
 
 	btCollisionShape* GetCollisionShape() const override;
 
+	bool LoadModel(const std::string& path);
+
 private:
 	btBvhTriangleMeshShape* m_meshShape = nullptr;
-	btTriangleMesh* m_mesh = nullptr;
+	btTriangleMesh* m_triangleMesh = nullptr;
 	std::string m_modelName;
 };
 
