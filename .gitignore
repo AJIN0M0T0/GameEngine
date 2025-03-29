@@ -441,3 +441,5 @@ FodyWeavers.xsd
 !OrganicEngine/Resource/*
 *.cso
 
+OrganicEngine/Assets/Shader/PixelShader.cso
+OrganicEngine/Assets/Shader/VertexShader.cso
