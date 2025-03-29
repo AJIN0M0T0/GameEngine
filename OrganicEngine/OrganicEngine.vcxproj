@@ -238,6 +238,7 @@
     <ClCompile Include="Engine\System\Graphics\Model.cxx" />
     <ClCompile Include="Engine\System\Graphics\Shader.cxx" />
     <ClCompile Include="Engine\System\Graphics\SwapChain.cxx" />
+    <ClCompile Include="Engine\System\InputAssign.cxx" />
     <ClCompile Include="Engine\System\InputDeviceManager.cpp" />
     <ClCompile Include="Engine\System\SceneManager.cxx" />
     <ClCompile Include="Engine\System\Supervision.cxx" />
@@ -261,6 +262,7 @@
     <ClInclude Include="Engine\System\Graphics\Model.hxx" />
     <ClInclude Include="Engine\System\Graphics\Shader.hxx" />
     <ClInclude Include="Engine\System\Graphics\SwapChain.hxx" />
+    <ClInclude Include="Engine\System\InputAssign.hxx" />
     <ClInclude Include="Engine\System\InputDeviceManager.h" />
     <ClInclude Include="Engine\System\SceneManager.hxx" />
     <ClInclude Include="Engine\System\Supervision.hxx" />

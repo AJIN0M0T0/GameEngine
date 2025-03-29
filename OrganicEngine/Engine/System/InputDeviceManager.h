@@ -14,8 +14,6 @@
 #include "Singleton.hxx"
 #include "../Math/Vectors.hxx"
 
-#pragma comment(lib, "Xinput.lib")
-
 //キーボード入力
 enum class KeyCodes
 {
@@ -246,7 +244,6 @@ enum class PadCodes
 };
 
 namespace Engine::System {
-
 	/// @brief キーボードやコントローラー入力ステータスの保持とその判定
 	/// @brief 各判定ではこちらではなくInputDeviceを使用してください。
 	/// @brief ▼▲▼▲▼▲ シングルトンです ▼▲▼▲▼▲

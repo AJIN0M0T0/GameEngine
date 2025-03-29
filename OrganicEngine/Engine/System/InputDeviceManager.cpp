@@ -1,5 +1,7 @@
 #include "InputDeviceManager.h"
 
+#pragma comment(lib, "Xinput.lib")
+
 using namespace Engine::System;
 using namespace Engine::Math;
 
