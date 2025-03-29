@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -240,6 +240,7 @@
     <ClCompile Include="Engine\System\Graphics\Shader.cxx" />
     <ClCompile Include="Engine\System\Graphics\SwapChain.cxx" />
     <ClCompile Include="Engine\System\InputDeviceManager.cpp" />
+    <ClCompile Include="Engine\System\PhysicsWorld.cxx" />
     <ClCompile Include="Engine\System\SceneManager.cxx" />
     <ClCompile Include="Engine\System\Supervision.cxx" />
     <ClCompile Include="Engine\System\Allocator.cxx" />
@@ -264,6 +265,7 @@
     <ClInclude Include="Engine\System\Graphics\Shader.hxx" />
     <ClInclude Include="Engine\System\Graphics\SwapChain.hxx" />
     <ClInclude Include="Engine\System\InputDeviceManager.h" />
+    <ClInclude Include="Engine\System\PhysicsWorld.hxx" />
     <ClInclude Include="Engine\System\SceneManager.hxx" />
     <ClInclude Include="Engine\System\Supervision.hxx" />
     <ClCompile Include="Engine\System\Graphics\Texture.cxx" />
