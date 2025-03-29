@@ -264,7 +264,7 @@ bool MeshCollision::LoadModel(const std::string& path)
 		return false;
 	}
 
-	m_mesh = new btTriangleMesh();
+	m_triangleMesh = new btTriangleMesh();
 
 	// メッシュの読み込み
 	for (unsigned int meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex)
