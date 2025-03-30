@@ -443,3 +443,5 @@ FodyWeavers.xsd
 
 OrganicEngine/Assets/Shader/PixelShader.cso
 OrganicEngine/Assets/Shader/VertexShader.cso
+OrganicEngine/.vscode/
+
