@@ -249,6 +249,7 @@
     <ClCompile Include="Object\GameObject.cxx" />
     <ClCompile Include="Object\Object.cxx" />
     <ClCompile Include="Object\SceneBase.cxx" />
+    <ClCompile Include="Object\SceneObject\collisionTestScene.cpp" />
     <ClCompile Include="Object\SceneObject\testScene.cxx" />
     <ClInclude Include="Component\CameraBase.h" />
     <ClInclude Include="Component\CameraDebug.h" />
@@ -275,6 +276,7 @@
     <ClInclude Include="Object\GameObject.hxx" />
     <ClInclude Include="Object\Object.hxx" />
     <ClInclude Include="Object\SceneBase.hxx" />
+    <ClInclude Include="Object\SceneObject\collisionTestScene.hxx" />
     <ClInclude Include="Object\SceneObject\testScene.hxx" />
   </ItemGroup>
   <ItemGroup>

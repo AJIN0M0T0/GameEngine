@@ -44,8 +44,8 @@ public:
 
 	virtual btCollisionShape* GetCollisionShape() const = 0;
 
-protected:
 	iObject* m_pObject = nullptr;
+protected:
 	btCollisionWorld* m_collisionWorld = nullptr;
 	btCollisionObject* m_collisionObject = nullptr;
 
@@ -79,7 +79,7 @@ public:
 	 * @param[in] y  y軸方向の半径
 	 * @param[in] z  z軸方向の半径
 	 */
-	void SetHalfExtents(const float x, const float y, const float z)
+	inline void SetHalfExtents(const float x, const float y, const float z)
 	{
 		m_halfExtents = btVector3(x, y, z);
 		m_boxShape = new btBoxShape(m_halfExtents);

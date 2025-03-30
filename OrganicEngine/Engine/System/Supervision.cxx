@@ -11,6 +11,7 @@
 #include "InputDeviceManager.h"
 
 #include "../../Object/SceneObject/testScene.hxx"
+#include "../../Object/SceneObject/collisionTestScene.hxx"
 
 // =-=-= インスタンス変数の実体化 =-=-=
 std::stack<void(*)()> Engine::System::Supervision::m_finalizers;//終了処理
@@ -36,7 +37,7 @@ bool Engine::System::Supervision::Initialize()
 	ThreadPool::CreateInstance();
 
 	SceneManager::CreateInstance();
-	SceneManager::GetInstance().ChangeScene<testScene>();
+	SceneManager::GetInstance().ChangeScene<collisionTestScene>();
 
 	return Success;
 }
