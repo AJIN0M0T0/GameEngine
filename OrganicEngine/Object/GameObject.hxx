@@ -42,7 +42,7 @@ public_Func
 	{
 		for (const auto& elem : m_Components)
 		{
-			if (typeid(TypeComp) == typeid(elem.get()))
+			if (dynamic_cast<TypeComp*>(elem.get()))
 				return static_cast<TypeComp*>(elem.get());
 		}
 		DebugBreakPoint_
