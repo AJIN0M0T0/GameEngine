@@ -4,6 +4,7 @@
 #include <btBulletDynamicsCommon.h>
 #include <list>
 #include <functional>
+#include <memory>
 #include <DirectXMath.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -15,6 +16,7 @@ std::vector<std::pair<btCollisionObject*, btCollisionObject*>> iCollision::m_col
 iCollision::iCollision()
 	: m_func(nullptr)
 	, m_collisionObject(nullptr)
+	, m_collisionWorld(nullptr)
 {
 }
 
@@ -35,6 +37,14 @@ bool iCollision::Init()
 
 	// 衝突オブジェクトにユーザーポインタを設定(衝突時に自身を識別するため)
 	m_collisionObject->setUserPointer(m_pObject);
+
+	// CollisionWorldを作成
+
+	m_broadphase = std::make_unique<btDbvtBroadphase>();
+	m_collisionConfiguration = std::make_unique<btDefaultCollisionConfiguration>();
+	m_dispatcher = std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get());
+	m_collisionWorld = new btCollisionWorld(m_dispatcher.get(), m_broadphase.get(), m_collisionConfiguration.get());
+
 
 	// Bulletの衝突検出ワールドに登録
 	//g_pPhysics->GetDynamicsWorld()->addCollisionObject(m_collisionObject);

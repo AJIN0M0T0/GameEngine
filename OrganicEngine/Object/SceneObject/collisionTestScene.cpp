@@ -23,19 +23,26 @@ bool collisionTestScene::Init()
 	pCam.AddComponent<CameraDebug>()->SetMainCamera();
 
 	// モデルの生成 2つ
-	m_pObject1 = &thisCreateObject<GameObject>();
-	ModelRenderer* pModelRenderer1 = m_pObject1->AddComponent<ModelRenderer>();
+	GameObject& pObject1 = thisCreateObject<GameObject>();
+	ModelRenderer* pModelRenderer1 = pObject1.AddComponent<ModelRenderer>();
 	pModelRenderer1->Execute("Assets/Model/spot/spot.fbx");
 	m_pModel1 = pModelRenderer1->GetModel();
-	m_pObject1->AddComponent<CubeCollision>()->SetHalfExtents(1.0f, 1.0f, 1.0f);
-	m_pObject1->SetName("Object1");
+	CubeCollision* pCubeCollision1 = pObject1.AddComponent<CubeCollision>();
+	pCubeCollision1->SetHalfExtents(1.0f, 1.0f, 1.0f);
+	//pCubeCollision1->Init();
+	pObject1.SetName("Object1");
+	m_pObject1 = &pObject1;
 
-	m_pObject2 = &thisCreateObject<GameObject>();
-	ModelRenderer* pModelRenderer2 = m_pObject2->AddComponent<ModelRenderer>();
+
+	GameObject& pObject2 = thisCreateObject<GameObject>();
+	ModelRenderer* pModelRenderer2 = pObject2.AddComponent<ModelRenderer>();
 	pModelRenderer2->Execute("Assets/Model/spot/spot.fbx");
 	m_pModel2 = pModelRenderer2->GetModel();
-	m_pObject2->AddComponent<CubeCollision>()->SetHalfExtents(1.0f, 1.0f, 1.0f);
-	m_pObject1->SetName("Object2");
+	CubeCollision* pCubeCollision2 = pObject2.AddComponent<CubeCollision>();
+	pCubeCollision2->SetHalfExtents(1.0f, 1.0f, 1.0f);
+	//pCubeCollision2->Init();
+	pObject2.SetName("Object2");
+	m_pObject2 = &pObject2;
 
 	Engine::Graphic::ShaderManager& sm = Engine::Graphic::ShaderManager::GetInstance();
 
@@ -70,8 +77,8 @@ void collisionTestScene::Update()
 
 	// 衝突判定結果の取得
 	// SetHitEventで設定した関数が呼ばれる
-	auto hitObject1 = m_pObject1->GetComponent<CubeCollision>();
-	auto hitObject2 = m_pObject2->GetComponent<CubeCollision>();
+	auto* hitObject1 = m_pObject1->GetComponent<CubeCollision>();
+	auto* hitObject2 = m_pObject2->GetComponent<CubeCollision>();
 
 	//auto hit1 = hitObject1->IsHit("Object2");
 	//auto hit2 = hitObject2->IsHit("Object1");
@@ -85,9 +92,14 @@ void collisionTestScene::Update()
 	//{
 	//	OutputDebugStringA("Hit Object2\n");
 	//}
+	if (!hitObject1)
+	{
+		OutputDebugString("hitObject1 is nullptr\n");
+		return;
+	}
 
-	hitObject1->SetHitEvent("Object2", []() {OutputDebugStringA("Hit Object1\n"); });
-	hitObject2->SetHitEvent("Object1", []() {OutputDebugStringA("Hit Object2\n"); });
+	//hitObject1->SetHitEvent("Object2", []() {OutputDebugString("Hit Object1\n"); });
+	hitObject2->SetHitEvent("Object1", []() {OutputDebugString("Hit Object2\n"); });
 	
 
 

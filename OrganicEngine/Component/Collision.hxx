@@ -17,6 +17,7 @@
 #include <vector>
 #include <functional>
 #include <string>
+#include <memory>
 #include <btBulletDynamicsCommon.h>
 
 class iCollision
@@ -57,6 +58,9 @@ protected:
 private:
 	std::function<void()> m_func;
 
+	std::unique_ptr<btBroadphaseInterface> m_broadphase;
+	std::unique_ptr<btDefaultCollisionConfiguration> m_collisionConfiguration;
+	std::unique_ptr<btCollisionDispatcher> m_dispatcher;
 
 
 

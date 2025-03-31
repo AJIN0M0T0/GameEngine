@@ -40,7 +40,7 @@ public_Func
 	template<typename TypeComp, typename = std::enable_if_t<std::is_base_of_v<iComponent, TypeComp>>>
 	inline TypeComp* GetComponent()
 	{
-		for (const auto elem : m_Components)
+		for (const auto& elem : m_Components)
 		{
 			if (typeid(TypeComp) == typeid(elem.get()))
 				return static_cast<TypeComp*>(elem.get());
