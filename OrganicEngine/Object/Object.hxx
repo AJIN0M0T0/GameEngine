@@ -29,7 +29,7 @@ public_Func
 	/// @return 
 	template <typename TypeObject, typename = std::enable_if_t<std::is_base_of_v<iObject, TypeObject>>>
 	TypeObject& thisCreateObject() {
-		 TypeObject* pObject = New(TypeObject);
+		TypeObject* pObject = New(TypeObject);
 		this->AddChild(pObject);
 		AddInitQueue(pObject);
 		return *pObject;
