@@ -47,13 +47,14 @@ public:
 
 	iObject* m_pObject = nullptr;
 protected:
-	btCollisionWorld* m_collisionWorld = nullptr;
 	btCollisionObject* m_collisionObject = nullptr;
 
 	std::map<ID, std::function<void()>> m_hitEventID;
 	std::map<Tag, std::function<void()>> m_hitEventTag;
 	std::map<Name, std::function<void()>> m_hitEventName;
-	static std::vector<std::pair<btCollisionObject*, btCollisionObject*>> m_collisionPairs;
+	//static std::vector<std::pair<btCollisionObject*, btCollisionObject*>> m_collisionPairs;
+
+	//std::vector<btCollisionObject*> m_collisionObjects;
 
 private:
 	std::function<void()> m_func;
@@ -62,6 +63,7 @@ private:
 	std::unique_ptr<btDefaultCollisionConfiguration> m_collisionConfiguration;
 	std::unique_ptr<btCollisionDispatcher> m_dispatcher;
 
+	//static int collisionObjectCount; // 衝突オブジェクトの数
 
 
 };

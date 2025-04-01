@@ -1,6 +1,7 @@
 #include "Collision.hxx"
 #include "../Object/Object.hxx"
 #include "../Engine/Math/Vectors.hxx"
+#include "../Object/GameObject.hxx"
 #include <btBulletDynamicsCommon.h>
 #include <list>
 #include <functional>
@@ -11,12 +12,20 @@
 #include <assimp/postprocess.h>
 
 
-std::vector<std::pair<btCollisionObject*, btCollisionObject*>> iCollision::m_collisionPairs;
+static std::vector<std::pair<btCollisionObject*, btCollisionObject*>> m_collisionPairs;
+static int collisionObjectCount;
+std::vector<btCollisionObject*> m_collisionObjects;
+btCollisionWorld* m_collisionWorld = nullptr;
+
 
 iCollision::iCollision()
 	: m_func(nullptr)
 	, m_collisionObject(nullptr)
-	, m_collisionWorld(nullptr)
+	//, m_collisionWorld(nullptr)
+	, m_broadphase(nullptr)
+	, m_collisionConfiguration(nullptr)
+	, m_dispatcher(nullptr)
+	, m_pObject(nullptr)
 {
 }
 
@@ -50,6 +59,23 @@ bool iCollision::Init()
 	//g_pPhysics->GetDynamicsWorld()->addCollisionObject(m_collisionObject);
 	m_collisionWorld->addCollisionObject(m_collisionObject);
 
+	// 衝突オブジェクトを登録
+	m_collisionObjects.push_back(m_collisionObject);
+
+
+	
+	// 衝突オブジェクトの数をカウント
+	collisionObjectCount++;
+
+
+	// 衝突ペアを登録
+	for (auto& existingObject : m_collisionObjects)
+	{
+		if (existingObject == m_collisionObject)
+			continue;
+		m_collisionPairs.push_back(std::make_pair(existingObject, m_collisionObject));
+	}
+
 	return true;
 }
 
@@ -72,6 +98,119 @@ void iCollision::Update()
 
 	// Bulletの衝突検出ワールドに更新を通知
 	m_collisionObject->setWorldTransform(transform);
+
+	// 衝突検出
+	m_collisionWorld->performDiscreteCollisionDetection();
+
+
+	// 衝突ペアをチェックし、対応する関数を呼ぶ
+	int numManifolds = m_collisionWorld->getDispatcher()->getNumManifolds();
+	for (int i = 0; i < numManifolds; ++i)
+	{
+		btPersistentManifold* contactManifold = m_collisionWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		const btCollisionObject* objA = contactManifold->getBody0();
+		const btCollisionObject* objB = contactManifold->getBody1();
+
+		iObject* pObjectA = static_cast<iObject*>(objA->getUserPointer());
+		iObject* pObjectB = static_cast<iObject*>(objB->getUserPointer());
+
+		GameObject* pGameObjectA = reinterpret_cast<GameObject*>(objA->getUserPointer());
+		GameObject* pGameObjectB = reinterpret_cast<GameObject*>(objB->getUserPointer());
+
+		if (pObjectA == m_pObject)
+		{
+			auto it = m_hitEventID.find(pObjectB->GetID());
+			if (it != m_hitEventID.end())
+			{
+				it->second();
+			}
+			auto it2 = m_hitEventTag.find(pGameObjectB->GetTag());
+			if (it2 != m_hitEventTag.end())
+			{
+				it2->second();
+			}
+			auto it3 = m_hitEventName.find(pGameObjectB->GetName());
+			if (it3 != m_hitEventName.end())
+			{
+				it3->second();
+			}
+		}
+
+		if (pObjectB == m_pObject)
+		{
+			auto it = m_hitEventID.find(pObjectA->GetID());
+			if (it != m_hitEventID.end())
+			{
+				it->second();
+			}
+			auto it2 = m_hitEventTag.find(pGameObjectA->GetTag());
+			if (it2 != m_hitEventTag.end())
+			{
+				it2->second();
+			}
+			auto it3 = m_hitEventName.find(pGameObjectA->GetName());
+			if (it3 != m_hitEventName.end())
+			{
+				it3->second();
+			}
+		}
+	}
+	
+	//for (auto& pair : m_collisionPairs)
+	//{
+	//	btCollisionObject* objA = pair.first;
+	//	btCollisionObject* objB = pair.second;
+
+	//	iObject* pObjectA = static_cast<iObject*>(objA->getUserPointer());
+	//	iObject* pObjectB = static_cast<iObject*>(objB->getUserPointer());
+
+ //       GameObject* pGameObjectA = reinterpret_cast<GameObject*>(objA->getUserPointer());
+	//	GameObject* pGameObjectB = reinterpret_cast<GameObject*>(objB->getUserPointer());
+	//	
+	//	if (pObjectA == m_pObject)
+	//	{
+	//		auto it = m_hitEventID.find(pObjectB->GetID());
+	//		
+
+	//		if (it != m_hitEventID.end())
+	//		{
+	//			it->second();
+	//		}
+
+	//		auto it2 = m_hitEventTag.find(pGameObjectB->GetTag());
+	//		if (it2 != m_hitEventTag.end())
+	//		{
+	//			it2->second();
+	//		}
+
+	//		auto it3 = m_hitEventName.find(pGameObjectB->GetName());
+	//		if (it3 != m_hitEventName.end())
+	//		{
+	//			it3->second();
+	//		}
+	//	}
+
+	//	if (pObjectB == m_pObject)
+	//	{
+	//		auto it = m_hitEventID.find(pObjectA->GetID());
+	//		if (it != m_hitEventID.end())
+	//		{
+	//			it->second();
+	//		}
+	//		auto it2 = m_hitEventTag.find(pGameObjectA->GetTag());
+	//		if (it2 != m_hitEventTag.end())
+	//		{
+	//			it2->second();
+	//		}
+	//		auto it3 = m_hitEventName.find(pGameObjectA->GetName());
+	//		if (it3 != m_hitEventName.end())
+	//		{
+	//			it3->second();
+	//		}
+	//	}
+	//}
+	 
+
 }
 
 iObject* iCollision::IsHit(ID id)
@@ -138,17 +277,19 @@ std::list<iObject*> iCollision::IsHit(Name name)
 		iObject* pObjectA = static_cast<iObject*>(objctA->getUserPointer());
 		iObject* pObjectB = static_cast<iObject*>(objctB->getUserPointer());
 		
-		//if (pObjectA == m_pObject && pObjectB->GetName() == name)
-		//{
-		//	hitObjects.push_back(pObjectB->GetParent());
-		//}
-		//if (pObjectB == m_pObject && pObjectA->GetName() == name)
-		//{
-		//	hitObjects.push_back(pObjectA->GetParent());
-		//}
+		GameObject* pGameObjectA = reinterpret_cast<GameObject*>(objctA->getUserPointer());
+		GameObject* pGameObjectB = reinterpret_cast<GameObject*>(objctB->getUserPointer());
+
+		if (pObjectA == m_pObject && pGameObjectB->GetName() == name)
+		{
+			hitObjects.push_back(pObjectB->GetParent());
+		}
+
+		if (pObjectB == m_pObject && pGameObjectA->GetName() == name)
+		{
+			hitObjects.push_back(pObjectA->GetParent());
+		}
 	}
-
-
 
 	return std::list<iObject*>();
 }
@@ -191,6 +332,7 @@ bool CubeCollision::Init()
 
 void CubeCollision::Update()
 {
+	iCollision::Update();
 }
 
 btCollisionShape* CubeCollision::GetCollisionShape() const
@@ -227,6 +369,7 @@ bool CapsuleCollision::Init()
 
 void CapsuleCollision::Update()
 {
+	iCollision::Update();
 }
 
 btCollisionShape* CapsuleCollision::GetCollisionShape() const
@@ -250,6 +393,7 @@ bool MeshCollision::Init()
 
 void MeshCollision::Update()
 {
+	iCollision::Update();
 }
 
 btCollisionShape* MeshCollision::GetCollisionShape() const
